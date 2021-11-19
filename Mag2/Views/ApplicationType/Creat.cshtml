@@ -1,0 +1,71 @@
+﻿
+<!--Views->Category-->
+<!--ссылка на модель для ввода новых значений-->
+@model Mag2.Models.ApplicationType
+
+<form method="post" asp-action="Creat">
+    <div class="border p-3">
+
+        <!--<div asp-validation-summary="All" class="text-danger"></div>-->   <!--All выводит дополнительно инфу-->
+
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Add Application Type</h2>
+        </div>
+
+
+        <div class="row">
+            <div class="col-8">
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Name"></label><!--помещая значения в (label) и используя (asp-for) в дальнейшем можем разделять слова в объектах Модели напрмер (Categery) используя атрибут анатации данных-->
+                    </div>
+
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" /><!--textbox привязка к свойству Name-->
+                        <span asp-validation-for="Name" class="text-danger"></span> <!--Сообщение об ошибке-->
+                    </div>
+
+                </div>
+
+                
+
+                <div class="form-group row">
+
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100"> <i class="fas fa-arrow-left"></i></a><!--контроле Category не обизательно указавать т.к уже работаем в нём-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+<!--Валедация на стороне клиента-->
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}
+

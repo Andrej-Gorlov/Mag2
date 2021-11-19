@@ -1,0 +1,83 @@
+﻿
+<!--ссылка на модель для ввода новых значений-->
+@model Mag2.Models.Category
+
+<form method="post">
+
+    <input asp-for="Id" hidden /><!-- нужно для опредидения id (что-бы был доступен в методе UEdit(Categery o)!!!) hidden делает скрытым-->
+
+    <div class="border p-3">
+
+
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Edit ! ! !</h2>
+        </div>
+
+
+        <div class="row">
+            <div class="col-8">
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Name"></label><!--помещая значения в (label) и используя (asp-for) в дальнейшем можем разделять слова в объектах Модели напрмер (Categery) используя атрибут анатации данных-->
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" /><!--textbox привязка к свойству Name-->
+                        <span asp-validation-for="Name" class="text-danger"></span> <!--Сообщение об ошибке-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="DisplayOrder"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DisplayOrder" class="form-control" />
+                        <span asp-validation-for="DisplayOrder" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Update!!!" />
+                        </div>
+
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-warning w-50"> <i class="fas fa-arrow-left"></i></a><!--контроле Category не обизательно указавать т.к уже работаем в нём-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+<!--Валедация на стороне клиента-->
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}
+
+
