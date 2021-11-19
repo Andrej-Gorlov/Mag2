@@ -433,3 +433,7 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Category\Inde
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Category\Creat.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\ApplicationType\Creat.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\ApplicationType\Index.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\ApplicationType\Delete.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\ApplicationType\Edit.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Category\Delete.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Category\Edit.cshtml.g.cs
