@@ -14,6 +14,6 @@ namespace Mag2.Data
         }
         public DbSet<Category> Category { get; set; }//создание таблицы в бд с именим Сategery
         public DbSet<ApplicationType> ApplicationType { get; set; }//создание таблицы в бд с именим ApplicationType
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Product> Product { get; set; }//
     }
 }
