@@ -1,0 +1,164 @@
+﻿
+<!--ссылка на модель для ввода новых значений-->
+@model Mag2.Models.ViewModels.ProductVM
+
+@{
+    var title = "Create Priduct";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <!--(enctype) нужен для использования img-->
+    @if (Model.Product.Id != 0) // если будет создания то id не будет определено
+    {
+        title = "Edit Product";
+        <input asp-for="Product.Id" hidden /><!-- нужно для опредидения id (что-бы был доступен в методе UEdit(Categery o)!!!) hidden делает скрытым-->
+    }
+
+    <div class="border p-3">
+
+
+        <div class="form-group row">
+            <h2 class="text-info pl-3"> @title </h2>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-8">
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Product.Name"></label><!--помещая значения в (label) и используя (asp-for) в дальнейшем можем разделять слова в объектах Модели напрмер (Categery) используя атрибут анатации данных-->
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Name" class="form-control" /><!--textbox привязка к свойству Name-->
+                        <span asp-validation-for="Product.Name" class="text-danger"></span> <!--Сообщение об ошибке-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Product.Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Price" class="form-control" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Product.Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Product.Description" class="form-control summernote"></textarea><!--textarea и класс summernote (add редактор)-->
+                        <span asp-validation-for="Product.Description" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        Image
+                    </div>
+                    <div class="col-8">
+                        <input type="file" name="file" id="uploadBox" multiple class="form-control" /><!--type="file" для добовления файлов -->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="Product.CategoryId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.CategoryId" asp-items="@Model.CategorySelectList" class="form-control">
+                            <!--раскрывающий список-->
+                            <option disabled selected>--Select Category--</option><!--disabled отключает выбор-->
+                        </select>
+                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            @if (Model.Product.Id != 0)//update
+                            {
+                                <input type="submit" class="btn btn-info w-100" value="Update!" />
+                            }
+                            else//create
+                            {
+                                <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="Create!!" />
+                            }
+                        </div>
+
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-warning w-50"> <i class="fas fa-arrow-left"></i></a><!--контроле Category не обизательно указавать т.к уже работаем в нём-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--Выводим img если редактируем!-->
+            <div class="col-4">
+                @* Keep this empty *@
+                @if (Model.Product.Id != 0)
+                {
+                    <img src="@WebConst.ImagePath@Model.Product.Image" width="100%" style="border-radius:0px 15px; border:2px solid #00c9cf" />
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+<!--Валедация на стороне клиента-->
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+
+        <script>
+            //для использования редактора
+            $(document).ready(function () {
+                $('.summernote').summernote({
+                    height: 250
+                });
+            });
+            /* validateInput() ИСПОЛЬЗУЕМ ДЛЯ обновлениея товара (т.е если не добавили img будет всплывать окно уведомления)*/
+            function validateInput() {
+                if (document.getElementById("uploadBox").value=="") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please upload an Image!',
+                    })
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    }
+
+}
+
