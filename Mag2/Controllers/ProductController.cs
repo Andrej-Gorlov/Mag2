@@ -17,9 +17,10 @@ namespace Mag2.Controllers
     {
         private readonly ApplicationDbContext db;
         private readonly IWebHostEnvironment _webHostEnvironment;//(используем паттерн зависимости)
-        public ProductController(ApplicationDbContext db)
+        public ProductController(ApplicationDbContext db, IWebHostEnvironment IWHE)
         {
             this.db = db;// доступ к бд для получения данных
+            _webHostEnvironment = IWHE;//доступ к корневой папки (для img)
         }
 
 
@@ -104,7 +105,7 @@ namespace Mag2.Controllers
                     }
                     // обновляется сылка на img
                     proMV.Product.Image = feilName + extension;
-                    this.db.Product.Add(proMV.Product);//добовляем new img товара
+                    this.db.Product.Add(proMV.Product);//добовляем new img 
                 }
                 else//updating (обновляем)
                 {
@@ -161,27 +162,34 @@ namespace Mag2.Controllers
             {
                 return NotFound();
             }
-
-            var o = this.db.Category.Find(id);
-
-            if (o == null)
+            Product product = this.db.Product.Include(x => x.Category).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
+            //product.Categery= _db.Сategery.Find(product.CategeryId); //получаем каткгорию товара
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(o);
+            return View(product);
         }
         //Удаление в БД
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var o = this.db.Category.Find(id);
+            var o = this.db.Product.Find(id);
 
             if (o == null)
             {
                 return NotFound();
             }
-            this.db.Category.Remove(o);
+
+            string upload = _webHostEnvironment.WebRootPath + WebConst.ImagePath;//путь к img
+            var oldFile = Path.Combine(upload, o.Image);//ссылка на существующие img
+
+            if (System.IO.File.Exists(oldFile))//если filt существует
+            {
+                System.IO.File.Delete(oldFile);
+            }
+            this.db.Product.Remove(o);
             this.db.SaveChanges();
             return RedirectToAction("Index");
         }
