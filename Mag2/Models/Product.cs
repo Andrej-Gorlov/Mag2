@@ -25,5 +25,12 @@ namespace Mag2.Models
         public int CategoryId { get; set; }// связь сущности между Categery и Product
         [ForeignKey("CategoryId")]//автоматическая связь между текущим объектом и Categery(создаётся столбец id Categery (т.е. внешний ключ))
         public virtual Category Category { get; set; }
+
+
+
+        [Display(Name = "Application Type")]
+        public int ApplicationTypeId { get; set; }// связь сущности между Categery и Product
+        [ForeignKey("ApplicationTypeId")]//автоматическая связь между текущим объектом и Categery(создаётся столбец id Categery (т.е. внешний ключ))
+        public virtual ApplicationType ApplicationType { get; set; }
     }
 }

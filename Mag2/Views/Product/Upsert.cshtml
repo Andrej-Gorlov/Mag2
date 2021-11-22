@@ -90,6 +90,21 @@
 
                 <div class="form-group row">
 
+                    <div class="col-4">
+                        <label asp-for="Product.ApplicationTypeId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.ApplicationTypeId" asp-items="@Model.ApplicationTypeSelectList" class="form-control">
+                            <!--раскрывающий список-->
+                            <option disabled selected>--Select Application Type--</option><!--disabled отключает выбор-->
+                        </select>
+                        <span asp-validation-for="Product.ApplicationTypeId" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
                     <div class="col-8 offset-4 row">
 
                         <div class="col">

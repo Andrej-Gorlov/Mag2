@@ -32,6 +32,7 @@ namespace Mag2.Controllers
             foreach (var item in objList)// инфа о Categery
             {
                 item.Category = this.db.Category.FirstOrDefault(x => x.Id == item.CategoryId);
+                item.ApplicationType = this.db.ApplicationType.FirstOrDefault(x => x.Id == item.ApplicationTypeId);
             }
 
             return View(objList);
@@ -60,6 +61,11 @@ namespace Mag2.Controllers
             {
                 Product = new Product(),
                 CategorySelectList = this.db.Category.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }),
+                ApplicationTypeSelectList = this.db.ApplicationType.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
@@ -147,6 +153,11 @@ namespace Mag2.Controllers
                 Text = x.Name,
                 Value = x.Id.ToString()
             });
+            proMV.ApplicationTypeSelectList = this.db.ApplicationType.Select(x => new SelectListItem //НУЖНО ДЛЯ РАБОТЫ ВЫПАДАЮЩЕГО СПИСКА В СЛУЧАЕ НЕПРАВИЛЬНОГО ЗАПОЛНЕНИЯ (т.е не волиден) !!!
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
             return View(proMV);
         }
 
@@ -162,7 +173,7 @@ namespace Mag2.Controllers
             {
                 return NotFound();
             }
-            Product product = this.db.Product.Include(x => x.Category).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
+            Product product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
             //product.Categery= _db.Сategery.Find(product.CategeryId); //получаем каткгорию товара
             if (product == null)
             {

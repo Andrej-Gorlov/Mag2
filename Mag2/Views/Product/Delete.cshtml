@@ -1,5 +1,5 @@
 ﻿<!--ссылка на модель для ввода новых значений-->
-<!--Product т.к в контролере в методе delet передаётся priduct [на 162 строчки] -->
+<!--Product т.к в контролере в методе delete передаётся product [на 176 строчки] -->
 @model Mag2.Models.Product
 
 
@@ -63,6 +63,17 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="Category.Name" disabled class="form-control" />
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-4">
+                        <label asp-for="ApplicationTypeId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="ApplicationType.Name" disabled class="form-control" />
                     </div>
 
                 </div>
