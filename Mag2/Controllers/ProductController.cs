@@ -27,13 +27,18 @@ namespace Mag2.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = db.Product;
+            // Обращаемся к бд единыжды(получение Name)
+            IEnumerable<Product> objList = this.db.Product.Include(x=>x.Category).Include(x=>x.ApplicationType);
 
-            foreach (var item in objList)// инфа о Categery
-            {
-                item.Category = this.db.Category.FirstOrDefault(x => x.Id == item.CategoryId);
-                item.ApplicationType = this.db.ApplicationType.FirstOrDefault(x => x.Id == item.ApplicationTypeId);
-            }
+
+            //Множественное обращение к бд
+            //IEnumerable<Product> objList = db.Product;
+
+            //foreach (var item in objList)// инфа о Categery
+            //{
+            //    item.Category = this.db.Category.FirstOrDefault(x => x.Id == item.CategoryId);
+            //    item.ApplicationType = this.db.ApplicationType.FirstOrDefault(x => x.Id == item.ApplicationTypeId);
+            //}
 
             return View(objList);
         }

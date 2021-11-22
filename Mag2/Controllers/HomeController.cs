@@ -1,5 +1,8 @@
-﻿using Mag2.Models;
+﻿using Mag2.Data;
+using Mag2.Models;
+using Mag2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,15 +15,22 @@ namespace Mag2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
+            this.db = db;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeVM homeVM = new HomeVM()
+            {
+                Products=this.db.Product.Include(x=>x.Category).Include(x=>x.ApplicationType),
+                Categories=this.db.Category
+            };
+            return View(homeVM);
         }
 
         public IActionResult Privacy()

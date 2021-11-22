@@ -13,6 +13,8 @@ namespace Mag2.Models
         public int Id { get; set; }
         [Required]// также в EntityFrameworkCore преднозначен для передачи данных в бд  
         public string Name { get; set; }
+
+        public string ShortDesc { get; set; }// краткое описание
         public string Description { get; set; }//описание
         [Range(1, int.MaxValue)]
         public string Price { get; set; }
