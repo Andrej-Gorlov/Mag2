@@ -18,6 +18,6 @@ namespace Mag2.Models
         [DisplayName("Display Order")]// будет отображаться на странице вместо (DisplyOrder)
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Category display order must not be less than 1!")]
-        public int DisplayOrder { get; set; }//Отобразить заказ
+        public int DisplayOrder { get; set; }//Отобразить заказ//
     }
 }
