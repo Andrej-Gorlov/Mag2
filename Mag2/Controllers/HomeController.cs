@@ -33,6 +33,19 @@ namespace Mag2.Controllers
             return View(homeVM);
         }
 
+
+        public IActionResult Details(int id)
+        {
+            DetailsVM DetailsVM = new DetailsVM()
+            {
+                Product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).Where(x => x.Id == id).FirstOrDefault(),
+                ExistsInCart = false
+            };
+            return View(DetailsVM);
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();

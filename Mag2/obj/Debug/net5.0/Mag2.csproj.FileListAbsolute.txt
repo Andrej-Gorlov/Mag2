@@ -441,3 +441,4 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Product\Index
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Product\Upsert.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Product\Delete.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Shared\_IndividualProductCard.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Home\Details.cshtml.g.cs
