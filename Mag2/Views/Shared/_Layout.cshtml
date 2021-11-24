@@ -25,7 +25,10 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    <partial name="_LoginPartial" /><!--вывод содержимого _LoginPartial в _Layout-->
+
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
@@ -54,7 +57,7 @@
                             {
                                 <a asp-action="Index" asp-controller="Cart" class="nav-link">
 
-                                    @{ 
+                                    @{
                                         var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart).Count;
                                     }
                                     <!--icon корзины-->
@@ -65,13 +68,13 @@
 
                             else
                             {
-                            <a href="#" class="nav-link">
+                                <a href="#" class="nav-link">
 
-                                <i class="fas fa-shopping-cart">&nbsp; (0)</i>
+                                    <i class="fas fa-shopping-cart">&nbsp; (0)</i>
 
-                            </a>
+                                </a>
                             }
-                                        
+
                         </li>
 
                     </ul>
@@ -79,6 +82,8 @@
             </div>
         </nav>
     </header>
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -90,6 +95,7 @@
             &copy; 2021 - Mag2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

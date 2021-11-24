@@ -2,6 +2,7 @@ using Mag2.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,11 +29,14 @@ namespace Mag2
 
             services.AddDbContext<ApplicationDbContext>(o =>
             o.UseSqlServer(
-                Configuration.GetConnectionString("DefConnection")));//подключения sqlserver
+                Configuration.GetConnectionString("DefConnection")));//подключение sqlserver
+
+            services.AddDefaultIdentity<IdentityUser>()//подключенияе IdentityDbContext, устонавливаем пакет .AspNetCore.Identity.UI
+                .AddEntityFrameworkStores<ApplicationDbContext>();//AddEntityFrameworkStores при migration creat table в db 
 
 
-            // добовляем сервисы (для добовления товара в корзину)
-            services.AddHttpContextAccessor();
+            services.AddDistributedMemoryCache();
+            services.AddHttpContextAccessor();// добовляем сервисы (для добовления товара в корзину)
             services.AddSession(x =>
             {
                 x.IdleTimeout = TimeSpan.FromMinutes(10);// через 10 мин будет обнуление (например товара в корзине)
@@ -62,12 +66,17 @@ namespace Mag2
 
             app.UseRouting();
 
+            app.UseAuthentication();//добовление authentication в контейнер
+
             app.UseAuthorization();
 
             app.UseSession();//добавляем сессию в контейнер (services.AddSession(x =>x...))
 
             app.UseEndpoints(endpoints =>
             {
+                // маршрутизация для Razor
+                endpoints.MapRazorPages();
+                // маршрутизация для MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
