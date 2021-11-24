@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<!--доступ внутри сессии-->
+@using Microsoft.AspNetCore.Http
+<!--add servis-->
+@inject IHttpContextAccessor HttpContextAccessor
+<!--Доступ к SessionExtension-->
+@using Mag2.AdditionalServices
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,7 +27,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -40,6 +47,32 @@
                             </div>
                         </li>
 
+                        <!-- Проверка включена ли сессия -->
+                        <li>
+                            <!--есть ли товары в корзине-->
+                            @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
+                            {
+                                <a asp-action="Index" asp-controller="Cart" class="nav-link">
+
+                                    @{ 
+                                        var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart).Count;
+                                    }
+                                    <!--icon корзины-->
+                                    <i class="fas fa-shopping-cart">&nbsp; (@count)</i>
+                                </a>
+
+                            }
+
+                            else
+                            {
+                            <a href="#" class="nav-link">
+
+                                <i class="fas fa-shopping-cart">&nbsp; (0)</i>
+
+                            </a>
+                            }
+                                        
+                        </li>
 
                     </ul>
                 </div>

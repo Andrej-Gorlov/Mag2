@@ -31,6 +31,16 @@ namespace Mag2
                 Configuration.GetConnectionString("DefConnection")));//подключени€ sqlserver
 
 
+            // добовл€ем сервисы (дл€ добовлени€ товара в корзину)
+            services.AddHttpContextAccessor();
+            services.AddSession(x =>
+            {
+                x.IdleTimeout = TimeSpan.FromMinutes(10);// через 10 мин будет обнуление (например товара в корзине)
+                x.Cookie.HttpOnly = true;
+                x.Cookie.IsEssential = true;
+            });
+
+
             services.AddControllersWithViews();
         }
 
@@ -53,6 +63,8 @@ namespace Mag2
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();//добавл€ем сессию в контейнер (services.AddSession(x =>x...))
 
             app.UseEndpoints(endpoints =>
             {
