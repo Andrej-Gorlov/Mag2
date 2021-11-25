@@ -31,8 +31,13 @@ namespace Mag2
             o.UseSqlServer(
                 Configuration.GetConnectionString("DefConnection")));//подключение sqlserver
 
-            services.AddDefaultIdentity<IdentityUser>()//подключенияе IdentityDbContext, устонавливаем пакет .AspNetCore.Identity.UI
+            services.AddIdentity<IdentityUser, IdentityRole>()//подключенияе IdentityDbContext, устонавливаем пакет .AspNetCore.Identity.UI
+                .AddDefaultTokenProviders()//предостовление токинов по умолчанию (позволяет получить токен при потери пароля)
+                .AddDefaultUI()//
                 .AddEntityFrameworkStores<ApplicationDbContext>();//AddEntityFrameworkStores при migration creat table в db 
+
+
+
 
 
             services.AddDistributedMemoryCache();
