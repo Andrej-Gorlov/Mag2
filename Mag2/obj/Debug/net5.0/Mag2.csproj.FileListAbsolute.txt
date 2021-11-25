@@ -487,3 +487,4 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Areas\Identity\Page
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
