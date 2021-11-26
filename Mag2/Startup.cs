@@ -1,8 +1,10 @@
+using Mag2.AdditionalServices;
 using Mag2.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,8 +39,8 @@ namespace Mag2
                 .AddEntityFrameworkStores<ApplicationDbContext>();//AddEntityFrameworkStores при migration creat table в db 
 
 
-
-
+            //регистрация email services
+            services.AddTransient<IEmailSender, EmailSender>();// при каждом запросе на email services будет cerat new объект и предоставлен для запроса 
 
             services.AddDistributedMemoryCache();
             services.AddHttpContextAccessor();// добовляем сервисы (для добовления товара в корзину)
