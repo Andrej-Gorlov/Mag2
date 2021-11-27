@@ -490,3 +490,4 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Shared\_Login
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Cart\Summary.cshtml.g.cs
 C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\Mailjet.Client.dll
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Cart\InquriyConfirmation.cshtml.g.cs

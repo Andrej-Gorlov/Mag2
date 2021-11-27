@@ -7,14 +7,17 @@ namespace Mag2
 {
     public static class WebConst
     {
-        public static string ImagePath = @"\images\product\";
+        public const string ImagePath = @"\images\product\";
 
         //key для доступа к сеансу(SessionExtension)
-        public static string SessionCart = "ShoppingCartSession";
+        public const string SessionCart = "ShoppingCartSession";
 
 
-        public static string AdminRole = "Admin";
-        public static string CustomerRole = "Customer";
+        public const string AdminRole = "Admin";
+        public const string CustomerRole = "Customer";
+
+
+        public const string EmailAdmin = "zverekane@yandex.ru";
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Mag2.Data;
 using Mag2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mag2.Controllers
 {
+    [Authorize(Roles = WebConst.AdminRole)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext db;

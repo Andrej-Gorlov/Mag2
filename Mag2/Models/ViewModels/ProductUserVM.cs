@@ -12,7 +12,7 @@ namespace Mag2.Models.ViewModels
             ProductsList = new List<Product>();//
         }
         public ApplicationUser ApplicationUser { get; set; }
-        public IEnumerable<Product> ProductsList { get; set; }
+        public IList<Product> ProductsList { get; set; }
 
     }
 }
