@@ -134,6 +134,19 @@ namespace Mag2.Areas.Identity.Pages.Account
                     }
                     else
                     {
+
+
+
+                        if (!User.IsInRole(WebConst.AdminRole))//т.е данный user уже зарегистрирован
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index");
+                        }
+
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
