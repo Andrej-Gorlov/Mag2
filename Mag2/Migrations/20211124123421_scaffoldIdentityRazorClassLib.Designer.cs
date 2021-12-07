@@ -21,7 +21,7 @@ namespace Mag2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("Mag2.Models.ApplicationType", b =>
+            modelBuilder.Entity("Mag2_Models.ApplicationType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace Mag2.Migrations
                     b.ToTable("ApplicationType");
                 });
 
-            modelBuilder.Entity("Mag2.Models.Category", b =>
+            modelBuilder.Entity("Mag2_Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace Mag2.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Mag2.Models.Product", b =>
+            modelBuilder.Entity("Mag2_Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -294,15 +294,15 @@ namespace Mag2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Mag2.Models.Product", b =>
+            modelBuilder.Entity("Mag2_Models.Product", b =>
                 {
-                    b.HasOne("Mag2.Models.ApplicationType", "ApplicationType")
+                    b.HasOne("Mag2_Models.ApplicationType", "ApplicationType")
                         .WithMany()
                         .HasForeignKey("ApplicationTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mag2.Models.Category", "Category")
+                    b.HasOne("Mag2_Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)

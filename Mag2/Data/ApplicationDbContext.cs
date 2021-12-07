@@ -1,4 +1,4 @@
-﻿using Mag2.Models;
+﻿using Mag2_Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

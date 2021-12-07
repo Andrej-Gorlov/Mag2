@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mag2_Extensions\Mag2_Extensions.csproj" />
+    <ProjectReference Include="..\Mag2_Models\Mag2_Models.csproj" />
   </ItemGroup>
 
 </Project>

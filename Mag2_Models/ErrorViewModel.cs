@@ -1,6 +1,6 @@
 using System;
 
-namespace Mag2.Models
+namespace Mag2_Models
 {
     public class ErrorViewModel
     {

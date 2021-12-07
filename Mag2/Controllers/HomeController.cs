@@ -1,7 +1,7 @@
 ﻿using Mag2_Extensions;
 using Mag2.Data;
-using Mag2.Models;
-using Mag2.Models.ViewModels;
+using Mag2_Models;
+using Mag2_Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

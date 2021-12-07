@@ -20,7 +20,7 @@ namespace Mag2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("Mag2.Models.Category", b =>
+            modelBuilder.Entity("Mag2_Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

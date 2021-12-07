@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mag2.Models.ViewModels
+namespace Mag2_Models.ViewModels
 {
     public class DetailsVM
     {

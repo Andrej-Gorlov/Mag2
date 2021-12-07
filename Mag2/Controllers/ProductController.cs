@@ -1,6 +1,6 @@
 ﻿using Mag2.Data;
-using Mag2.Models;
-using Mag2.Models.ViewModels;
+using Mag2_Models;
+using Mag2_Models.ViewModels;
 using Mag2_Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

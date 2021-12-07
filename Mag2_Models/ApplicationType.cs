@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mag2.Models
+namespace Mag2_Models
 {
     public class ApplicationType
     {
