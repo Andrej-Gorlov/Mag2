@@ -4,7 +4,7 @@
 @model Mag2_Models.ApplicationType
 
 <form method="post" asp-action="Creat">
-    <div class="border p-3">
+    <div class="border p-3 bg-white">
 
         <!--<div asp-validation-summary="All" class="text-danger"></div>-->   <!--All выводит дополнительно инфу-->
 
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-8">
 
-                <div class="form-group row">
+                <div class="form-group row py-2">
 
                     <div class="col-4">
                         <label asp-for="Name"></label><!--помещая значения в (label) и используя (asp-for) в дальнейшем можем разделять слова в объектах Модели напрмер (Categery) используя атрибут анатации данных-->
