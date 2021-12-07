@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace Mag2.AdditionalServices
+namespace Mag2_Extensions
 {
     public static class SessionExtension //расширение
     {

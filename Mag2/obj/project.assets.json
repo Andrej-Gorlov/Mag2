@@ -2789,6 +2789,20 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Mag2_Extensions/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Mailjet.Api": "1.2.2",
+          "Microsoft.AspNetCore.Identity.UI": "5.0.12"
+        },
+        "compile": {
+          "bin/placeholder/Mag2_Extensions.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Mag2_Extensions.dll": {}
+        }
       }
     }
   },
@@ -9151,10 +9165,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "Mag2_Extensions/1.0.0": {
+      "type": "project",
+      "path": "../Mag2_Extensions/Mag2_Extensions.csproj",
+      "msbuildProject": "../Mag2_Extensions/Mag2_Extensions.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Mag2_Extensions >= 1.0.0",
       "Mailjet.Api >= 1.2.2",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.12",
       "Microsoft.AspNetCore.Identity.UI >= 5.0.12",
@@ -9195,7 +9215,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\admin\\source\\repos\\Mag2\\Mag2_Extensions\\Mag2_Extensions.csproj": {
+              "projectPath": "C:\\Users\\admin\\source\\repos\\Mag2\\Mag2_Extensions\\Mag2_Extensions.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

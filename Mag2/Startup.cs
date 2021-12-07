@@ -1,4 +1,4 @@
-using Mag2.AdditionalServices;
+using Mag2_Extensions;
 using Mag2.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -22,4 +22,8 @@
     <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mag2_Extensions\Mag2_Extensions.csproj" />
+  </ItemGroup>
+
 </Project>

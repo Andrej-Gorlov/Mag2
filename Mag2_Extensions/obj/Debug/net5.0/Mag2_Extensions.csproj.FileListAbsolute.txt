@@ -1,0 +1,12 @@
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.AssemblyInfoInputs.cache
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.AssemblyInfo.cs
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\bin\Debug\net5.0\Mag2_Extensions.deps.json
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\bin\Debug\net5.0\Mag2_Extensions.dll
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\bin\Debug\net5.0\ref\Mag2_Extensions.dll
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\bin\Debug\net5.0\Mag2_Extensions.pdb
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.dll
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\ref\Mag2_Extensions.dll
+C:\Users\admin\source\repos\Mag2\Mag2_Extensions\obj\Debug\net5.0\Mag2_Extensions.pdb

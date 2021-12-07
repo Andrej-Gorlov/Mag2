@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mag2
+namespace Mag2_Extensions
 {
     public static class WebConst
     {

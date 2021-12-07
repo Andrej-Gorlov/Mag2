@@ -1,6 +1,6 @@
-﻿
-<!--ссылка на модель для ввода новых значений-->
+﻿<!--ссылка на модель для ввода новых значений-->
 @model Mag2.Models.ViewModels.ProductVM
+@using Mag2_Extensions
 
 @{
     var title = "Create Priduct";
@@ -174,7 +174,7 @@
             });
             /* validateInput() ИСПОЛЬЗУЕМ ДЛЯ обновлениея товара (т.е если не добавили img будет всплывать окно уведомления)*/
             function validateInput() {
-                if (document.getElementById("uploadBox").value=="") {
+                if (document.getElementById("uploadBox").value == "") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',

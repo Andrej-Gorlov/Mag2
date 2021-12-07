@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mag2.AdditionalServices
+namespace Mag2_Extensions
 {
     // рассылка emails
     public class EmailSender : IEmailSender

@@ -1,7 +1,8 @@
 ﻿@page
 @model RegisterModel
+@using Mag2_Extensions
 
-@if (User.IsInRole(Mag2.WebConst.AdminRole))
+@if (User.IsInRole(WebConst.AdminRole))
 {
     <h1>Registr an Admin Account !</h1>
 }
@@ -50,7 +51,7 @@
             </div>
 
 
-            @if (User.IsInRole(Mag2.WebConst.AdminRole))
+            @if (User.IsInRole(WebConst.AdminRole))
             {
                 <button type="submit" class="btn btn-warning" style="border-radius: 0px 15px">Register Admin User</button>
             }
