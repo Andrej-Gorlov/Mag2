@@ -1,4 +1,4 @@
-﻿using Mag2.Data;
+﻿using Mag2_DataAcces;
 using Mag2_Models;
 using Mag2_Models.ViewModels;
 using Mag2_Extensions;

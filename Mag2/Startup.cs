@@ -1,5 +1,5 @@
 using Mag2_Extensions;
-using Mag2.Data;
+using Mag2_DataAcces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

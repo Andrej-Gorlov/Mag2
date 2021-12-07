@@ -1,5 +1,5 @@
 ﻿using System;
-using Mag2.Data;
+using Mag2_DataAcces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

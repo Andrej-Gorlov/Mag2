@@ -1,4 +1,4 @@
-﻿using Mag2.Data;
+﻿
 using Mag2_Models;
 using Mag2_Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mag2_DataAcces;
 
 namespace Mag2.Controllers
 {

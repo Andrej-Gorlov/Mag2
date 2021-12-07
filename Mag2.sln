@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mag2_Extensions", "Mag2_Ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mag2_Models", "Mag2_Models\Mag2_Models.csproj", "{F9E73272-4218-4E51-AABA-3B058C92755F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mag2_DataAcces", "Mag2_DataAcces\Mag2_DataAcces.csproj", "{485A32BE-332E-4DDF-95B1-B468A91EB040}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F9E73272-4218-4E51-AABA-3B058C92755F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9E73272-4218-4E51-AABA-3B058C92755F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9E73272-4218-4E51-AABA-3B058C92755F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{485A32BE-332E-4DDF-95B1-B468A91EB040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{485A32BE-332E-4DDF-95B1-B468A91EB040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{485A32BE-332E-4DDF-95B1-B468A91EB040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{485A32BE-332E-4DDF-95B1-B468A91EB040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
