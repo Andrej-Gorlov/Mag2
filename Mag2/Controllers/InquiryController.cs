@@ -20,5 +20,13 @@ namespace Mag2.Controllers
         {
             return View();
         }
+
+        #region
+        [HttpGet]
+        public IActionResult GetInquiryList() 
+        {
+            return Json(new { data = this.inqHeaderRepos.GetAll() });
+        }
+        #endregion
     }
 }
