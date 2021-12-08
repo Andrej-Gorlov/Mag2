@@ -27,7 +27,7 @@ namespace Mag2_DataAcces.RepositoryPattern
         {
             return dbSet.Find(id);
         }
-
+        // 
         public T FristOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
@@ -48,7 +48,7 @@ namespace Mag2_DataAcces.RepositoryPattern
             }
             return query.FirstOrDefault();
         }
-
+        // получение нескольких записей 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
