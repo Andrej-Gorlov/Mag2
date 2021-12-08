@@ -12,17 +12,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
 
 namespace Mag2.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext db;
+        private readonly IProductRepository productRepos;
+        private readonly ICategoryRepository catRepos;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepos, ICategoryRepository catRepos)
         {
-            this.db = db;
+            this.productRepos = productRepos;
+            this.catRepos = catRepos;
             _logger = logger;
         }
 
@@ -30,8 +33,8 @@ namespace Mag2.Controllers
         {
             HomeVM homeVM = new HomeVM()
             {
-                Products=this.db.Product.Include(x=>x.Category).Include(x=>x.ApplicationType),
-                Categories=this.db.Category
+                Products= this.productRepos.GetAll(includeProperties: "Category,ApplicationType"),
+                Categories =this.catRepos.GetAll()
             };
             return View(homeVM);
         }
@@ -50,7 +53,7 @@ namespace Mag2.Controllers
 
             DetailsVM DetailsVM = new DetailsVM()
             {
-                Product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).Where(x => x.Id == id).FirstOrDefault(),
+                Product = this.productRepos.FirstOrDefault(x=>x.Id==id,includeProperties: "Category,ApplicationType"),
                 ExistsInCart = false
             };
 

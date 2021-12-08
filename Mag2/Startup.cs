@@ -56,6 +56,9 @@ namespace Mag2
             services.AddScoped<ICategoryRepository, CategoryRepository>();//регистрация ICategoryRepository
             services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();// IApplicationTypeRepository
             services.AddScoped<IProductRepository, ProductRepository>();// IProductRepository
+            services.AddScoped<IInquiryHeaderRepository, InquiryHeaderRepository>();
+            services.AddScoped<IInquiryDetailRepository, InquiryDetailRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             services.AddControllersWithViews();
         }
