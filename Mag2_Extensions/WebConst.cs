@@ -19,5 +19,8 @@ namespace Mag2_Extensions
 
         public const string EmailAdmin = "zverekane@yandex.ru";
 
+        public const string CategoryName = "Category";
+        public const string ApplicationTypeName = " ApplicationType";
+
     }
 }

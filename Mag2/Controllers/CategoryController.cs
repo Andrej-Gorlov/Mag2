@@ -7,23 +7,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
 
 namespace Mag2.Controllers
 {
     [Authorize(Roles = WebConst.AdminRole)]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext db;
-        public CategoryController(ApplicationDbContext db)
+
+
+        private readonly ICategoryRepository catRepos;
+        public CategoryController(ICategoryRepository catRepos)
         {
-            this.db = db;// доступ к бд для получения данных
+            this.catRepos = catRepos;
         }
 
 
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objList = db.Category;// записываем данные из таблицы Categery в объект "objList"
+            IEnumerable<Category> objList = catRepos.GetAll();// записываем данные из таблицы Categery в объект "objList"
 
             return View(objList);
         }
@@ -43,8 +46,8 @@ namespace Mag2.Controllers
             // выполненены все ли правела для модели (т.е валидные)
             if (ModelState.IsValid)
             {
-                this.db.Category.Add(obj);
-                this.db.SaveChanges();//передача?(проверка) и сохранения изминений
+                this.catRepos.Add(obj);
+                this.catRepos.Save();
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -59,7 +62,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.db.Category.Find(id);// Find работает с атребутами первичного ключа
+            var o = this.catRepos.Find(id.GetValueOrDefault());// Find работает с атребутами первичного ключа
 
             if (o == null)
             {
@@ -67,6 +70,7 @@ namespace Mag2.Controllers
             }
             return View(o);
         }
+
         //Добовление изминения в БД
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -74,8 +78,8 @@ namespace Mag2.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.db.Category.Update(obj);
-                this.db.SaveChanges();
+                this.catRepos.Update(obj);
+                this.catRepos.Save();
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -91,7 +95,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.db.Category.Find(id);
+            var o = this.catRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
@@ -99,19 +103,20 @@ namespace Mag2.Controllers
             }
             return View(o);
         }
+
         //Удаление в БД
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var o = this.db.Category.Find(id);
+            var o = this.catRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
                 return NotFound();
             }
-            this.db.Category.Remove(o);
-            this.db.SaveChanges();
+            this.catRepos.Remove(o);
+            this.catRepos.Save();
             return RedirectToAction("Index");
         }
     }

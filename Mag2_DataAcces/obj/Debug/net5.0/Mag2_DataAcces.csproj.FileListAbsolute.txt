@@ -13,3 +13,5 @@ C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\obj\Debug\net5.0\Mag2_DataAcces.
 C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\obj\Debug\net5.0\Mag2_DataAcces.dll
 C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\obj\Debug\net5.0\ref\Mag2_DataAcces.dll
 C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\obj\Debug\net5.0\Mag2_DataAcces.pdb
+C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\bin\Debug\net5.0\Mag2_Extensions.dll
+C:\Users\admin\source\repos\Mag2\Mag2_DataAcces\bin\Debug\net5.0\Mag2_Extensions.pdb

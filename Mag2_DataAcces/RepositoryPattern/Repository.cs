@@ -15,7 +15,7 @@ namespace Mag2_DataAcces.RepositoryPattern
         internal DbSet<T> dbSet;
         public Repository(ApplicationDbContext db)
         {
-            this.db = db;
+            this.db = db;// доступ к бд для получения данных
             this.dbSet = this.db.Set<T>();
         }
         public void Add(T entity)
@@ -28,7 +28,7 @@ namespace Mag2_DataAcces.RepositoryPattern
             return dbSet.Find(id);
         }
         // 
-        public T FristOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null, bool isTracking = true)
+        public T FirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)

@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
+using Mag2_DataAcces.RepositoryPattern;
 
 namespace Mag2
 {
@@ -51,6 +53,9 @@ namespace Mag2
                 x.Cookie.IsEssential = true;
             });
 
+            services.AddScoped<ICategoryRepository, CategoryRepository>();//регистрация ICategoryRepository
+            services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();// IApplicationTypeRepository
+            services.AddScoped<IProductRepository, ProductRepository>();// IProductRepository
 
             services.AddControllersWithViews();
         }

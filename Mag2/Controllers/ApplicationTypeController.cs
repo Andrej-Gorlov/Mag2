@@ -8,21 +8,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mag2_DataAcces;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
 
 namespace Mag2.Controllers
 {
     [Authorize(Roles = WebConst.AdminRole)]
     public class ApplicationTypeController : Controller
     {
-        private readonly ApplicationDbContext db;
-        public ApplicationTypeController(ApplicationDbContext db)
+        private readonly IApplicationTypeRepository appTapeRepos;
+        public ApplicationTypeController(IApplicationTypeRepository appTapeRepos)
         {
-            this.db = db;// доступ к бд для получения данных
+            this.appTapeRepos = appTapeRepos;// доступ к бд для получения данных
         }
 
         public IActionResult Index()
         {
-            IEnumerable<ApplicationType> objList = db.ApplicationType;
+            IEnumerable<ApplicationType> objList = appTapeRepos.GetAll();
             return View(objList);
         }
         public IActionResult Creat()
@@ -35,8 +36,8 @@ namespace Mag2.Controllers
         [ValidateAntiForgeryToken]//защита от взлома
         public IActionResult Creat(ApplicationType obj)
         {
-            this.db.ApplicationType.Add(obj);
-            this.db.SaveChanges();//передача?(проверка) и сохранения изминений
+            this.appTapeRepos.Add(obj);
+            this.appTapeRepos.Save();//передача?(проверка) и сохранения изминений
             return RedirectToAction("Index");
         }
 
@@ -53,7 +54,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.db.ApplicationType.Find(id);// Find работает с атребутами первичного ключа
+            var o = this.appTapeRepos.Find(id.GetValueOrDefault());// Find работает с атребутами первичного ключа
 
             if (o == null)
             {
@@ -68,8 +69,8 @@ namespace Mag2.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.db.ApplicationType.Update(obj);
-                this.db.SaveChanges();
+                this.appTapeRepos.Update(obj);
+                this.appTapeRepos.Save();
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -83,7 +84,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.db.ApplicationType.Find(id);
+            var o = this.appTapeRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
@@ -96,14 +97,14 @@ namespace Mag2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var o = this.db.ApplicationType.Find(id);
+            var o = this.appTapeRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
                 return NotFound();
             }
-            this.db.ApplicationType .Remove(o);
-            this.db.SaveChanges();
+            this.appTapeRepos.Remove(o);
+            this.appTapeRepos.Save();
             return RedirectToAction("Index");
         }
     }

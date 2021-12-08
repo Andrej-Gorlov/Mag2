@@ -2598,6 +2598,7 @@
       },
       "Mag2_DataAcces/1.0.0": {
         "dependencies": {
+          "Mag2_Extensions": "1.0.0",
           "Mag2_Models": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.12",
           "Microsoft.EntityFrameworkCore": "5.0.12",

@@ -12,17 +12,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
 
 namespace Mag2.Controllers
 {
     [Authorize(Roles = WebConst.AdminRole)]
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly IProductRepository productRepos;
         private readonly IWebHostEnvironment _webHostEnvironment;//(используем паттерн зависимости)
-        public ProductController(ApplicationDbContext db, IWebHostEnvironment IWHE)
+        public ProductController(IProductRepository productRepos, IWebHostEnvironment IWHE)
         {
-            this.db = db;// доступ к бд для получения данных
+            this.productRepos = productRepos;
             _webHostEnvironment = IWHE;//доступ к корневой папки (для img)
         }
 
@@ -31,7 +32,7 @@ namespace Mag2.Controllers
         public IActionResult Index()
         {
             // Обращаемся к бд единыжды(получение Name)
-            IEnumerable<Product> objList = this.db.Product.Include(x=>x.Category).Include(x=>x.ApplicationType);
+            IEnumerable<Product> objList = this.productRepos.GetAll(includeProperties:"Category,ApplicationType");
 
 
             //Множественное обращение к бд
@@ -65,19 +66,12 @@ namespace Mag2.Controllers
             //Product product = new Product();
 
             //------ сохраняется строгоя типизации (из-за добовления в Model объекта(например ProductVM))-------
+            // отображение в выпадающем списке
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategorySelectList = this.db.Category.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }),
-                ApplicationTypeSelectList = this.db.ApplicationType.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                })
+                CategorySelectList = this.productRepos.GetAllDropdownList(WebConst.CategoryName),
+                ApplicationTypeSelectList = this.productRepos.GetAllDropdownList(WebConst.ApplicationTypeName)
             };
 
             if (id == null)//creat
@@ -86,7 +80,7 @@ namespace Mag2.Controllers
             }
             else
             {
-                productVM.Product = this.db.Product.Find(id);//извличения товара из бд по id
+                productVM.Product = this.productRepos.Find(id.GetValueOrDefault());//извличения товара из бд по id
                 if (productVM.Product == null)
                 {
                     return NotFound();
@@ -119,11 +113,11 @@ namespace Mag2.Controllers
                     }
                     // обновляется сылка на img
                     proMV.Product.Image = feilName + extension;
-                    this.db.Product.Add(proMV.Product);//добовляем new img 
+                    this.productRepos.Add(proMV.Product);//добовляем new img 
                 }
                 else//updating (обновляем)
                 {
-                    var oFromDb = this.db.Product.AsNoTracking().FirstOrDefault(x => x.Id == proMV.Product.Id);//существующие названия file  (-- AsNoTracking() отключает отслеживания сущности (нужно для обновления db(иначе будет конфликт с (_db.Products.Update(proMV.Product)))) --)
+                    var oFromDb = this.productRepos.FirstOrDefault(x => x.Id == proMV.Product.Id,isTracking:false);//существующие названия file  (-- AsNoTracking() отключает отслеживания сущности (нужно для обновления db(иначе будет конфликт с (_db.Products.Update(proMV.Product)))) --)
 
                     if (files.Count > 0)//т.е file уже получен для существующего продукта
                     {
@@ -150,22 +144,15 @@ namespace Mag2.Controllers
                         proMV.Product.Image = oFromDb.Image;//img остаётся прежним.
                     }
 
-                    this.db.Product.Update(proMV.Product);
+                    this.productRepos.Update(proMV.Product);
                 }
-                this.db.SaveChanges();//передача?(проверка) и сохранения изминений
+                this.productRepos.Save();//передача?(проверка) и сохранения изминений
                 return RedirectToAction("Index");
             }
 
-            proMV.CategorySelectList = this.db.Category.Select(x => new SelectListItem //НУЖНО ДЛЯ РАБОТЫ ВЫПАДАЮЩЕГО СПИСКА В СЛУЧАЕ НЕПРАВИЛЬНОГО ЗАПОЛНЕНИЯ (т.е не волиден) !!!
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
-            proMV.ApplicationTypeSelectList = this.db.ApplicationType.Select(x => new SelectListItem //НУЖНО ДЛЯ РАБОТЫ ВЫПАДАЮЩЕГО СПИСКА В СЛУЧАЕ НЕПРАВИЛЬНОГО ЗАПОЛНЕНИЯ (т.е не волиден) !!!
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
+            proMV.CategorySelectList = this.productRepos.GetAllDropdownList(WebConst.CategoryName);
+            proMV.ApplicationTypeSelectList = this.productRepos.GetAllDropdownList(WebConst.ApplicationTypeName);
+            
             return View(proMV);
         }
 
@@ -181,8 +168,9 @@ namespace Mag2.Controllers
             {
                 return NotFound();
             }
-            Product product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
+            //Product product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
             //product.Categery= _db.Сategery.Find(product.CategeryId); //получаем каткгорию товара
+            Product product = this.productRepos.FirstOrDefault(x=>x.Id==id,includeProperties: "Category,ApplicationType");
             if (product == null)
             {
                 return NotFound();
@@ -194,7 +182,7 @@ namespace Mag2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var o = this.db.Product.Find(id);
+            var o = this.productRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
@@ -208,8 +196,8 @@ namespace Mag2.Controllers
             {
                 System.IO.File.Delete(oldFile);
             }
-            this.db.Product.Remove(o);
-            this.db.SaveChanges();
+            this.productRepos.Remove(o);
+            this.productRepos.Save();
             return RedirectToAction("Index");
         }
     }

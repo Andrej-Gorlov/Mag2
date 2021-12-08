@@ -18,7 +18,7 @@ namespace Mag2_DataAcces.RepositoryPattern.IRepository
             bool isTracking=true
             );
 
-        T FristOrDefault(
+        T FirstOrDefault(
            Expression<Func<T, bool>> filter = null,
            string includeProperties = null,
            bool isTracking = true
