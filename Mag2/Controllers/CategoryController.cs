@@ -48,8 +48,10 @@ namespace Mag2.Controllers
             {
                 this.catRepos.Add(obj);
                 this.catRepos.Save();
+                TempData[WebConst.Success] = "Category created successfull";
                 return RedirectToAction("Index");
             }
+            TempData[WebConst.Error] = "Error while creating category";
             return View(obj);
         }
 
@@ -80,8 +82,10 @@ namespace Mag2.Controllers
             {
                 this.catRepos.Update(obj);
                 this.catRepos.Save();
+                TempData[WebConst.Success] = "Category edit successfull";
                 return RedirectToAction("Index");
             }
+            TempData[WebConst.Error] = "Error while edit category";
             return View(obj);
         }
 
@@ -117,6 +121,7 @@ namespace Mag2.Controllers
             }
             this.catRepos.Remove(o);
             this.catRepos.Save();
+            TempData[WebConst.Success] = "Category delete successfull";
             return RedirectToAction("Index");
         }
     }

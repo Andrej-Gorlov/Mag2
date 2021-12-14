@@ -73,7 +73,7 @@ namespace Mag2.Controllers
             shoppingCartList.Remove(shoppingCartList.FirstOrDefault(x => x.ProductId==id));
 
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
-
+            TempData[WebConst.Success] = "The item has been removed from the cart";
             return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
         }
 
@@ -185,7 +185,7 @@ namespace Mag2.Controllers
             //__________________________________________________________________
 
 
-
+            TempData[WebConst.Success] = "Successful confirmation of the request";
             return RedirectToAction(nameof(InquriyConfirmation));//nameof выбирает только сущ., методы 
         }
         public IActionResult InquriyConfirmation()//Подтверждение запроса

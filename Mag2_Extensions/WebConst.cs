@@ -11,7 +11,7 @@ namespace Mag2_Extensions
 
         //key для доступа к сеансу(SessionExtension)
         public const string SessionCart = "ShoppingCartSession";
-
+        public const string SessionInquiryId = "InquirySession";
 
         public const string AdminRole = "Admin";
         public const string CustomerRole = "Customer";
@@ -20,7 +20,10 @@ namespace Mag2_Extensions
         public const string EmailAdmin = "zverekane@yandex.ru";
 
         public const string CategoryName = "Category";
-        public const string ApplicationTypeName = " ApplicationType";
+        public const string ApplicationTypeName = "ApplicationType";
+
+        public const string Success = "Success";
+        public const string Error = "Error";
 
     }
 }

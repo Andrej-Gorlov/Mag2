@@ -500,3 +500,5 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\ref\Mag2.dll
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Mag2.pdb
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Mag2.genruntimeconfig.cache
 C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Inquiry\Index.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Inquiry\Details.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Shared\_Notifications.cshtml.g.cs

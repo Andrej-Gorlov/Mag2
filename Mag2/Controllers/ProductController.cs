@@ -76,6 +76,7 @@ namespace Mag2.Controllers
 
             if (id == null)//creat
             {
+
                 return View(productVM);
             }
             else
@@ -88,6 +89,8 @@ namespace Mag2.Controllers
                 return View(productVM);
             }
         }
+
+
         //Добовление в БД
         [HttpPost]//явное определения экшин метота типа post
         [ValidateAntiForgeryToken]//защита от взлома
@@ -147,12 +150,14 @@ namespace Mag2.Controllers
                     this.productRepos.Update(proMV.Product);
                 }
                 this.productRepos.Save();//передача?(проверка) и сохранения изминений
+                TempData[WebConst.Success] = "Product type update successfull";
+
                 return RedirectToAction("Index");
             }
 
             proMV.CategorySelectList = this.productRepos.GetAllDropdownList(WebConst.CategoryName);
             proMV.ApplicationTypeSelectList = this.productRepos.GetAllDropdownList(WebConst.ApplicationTypeName);
-            
+            TempData[WebConst.Error] = "Error while update product type";
             return View(proMV);
         }
 
@@ -198,6 +203,7 @@ namespace Mag2.Controllers
             }
             this.productRepos.Remove(o);
             this.productRepos.Save();
+            TempData[WebConst.Success] = "Product type delete successfull";
             return RedirectToAction("Index");
         }
     }

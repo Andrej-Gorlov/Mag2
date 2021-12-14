@@ -19,6 +19,7 @@ function loadDataTable(url) {
                 "render": function (data) {
                     return `
                             <div class="text-center">
+
                                 <a href="/Inquiry/Details/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i> 
                                 </a>

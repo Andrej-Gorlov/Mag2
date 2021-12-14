@@ -86,7 +86,7 @@ namespace Mag2.Controllers
             shoppingCartList.Add(new ShoppingCart { ProductId = id });
             // установка сессии
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
-
+            TempData[WebConst.Success] = "Product added to cart";
             return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
         }
 
@@ -112,7 +112,7 @@ namespace Mag2.Controllers
             }
             // установка сессии
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
-
+            TempData[WebConst.Success] = "Product has been removed from the cart";
             return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
         }
 

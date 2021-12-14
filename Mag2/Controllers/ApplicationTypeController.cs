@@ -38,6 +38,7 @@ namespace Mag2.Controllers
         {
             this.appTapeRepos.Add(obj);
             this.appTapeRepos.Save();//передача?(проверка) и сохранения изминений
+            TempData[WebConst.Success] = "Application type creat successfull";
             return RedirectToAction("Index");
         }
 
@@ -71,8 +72,10 @@ namespace Mag2.Controllers
             {
                 this.appTapeRepos.Update(obj);
                 this.appTapeRepos.Save();
+                TempData[WebConst.Success] = "Application type edit successfull";
                 return RedirectToAction("Index");
             }
+            TempData[WebConst.Error] = "Error while edit application type";
             return View(obj);
         }
 
@@ -105,6 +108,7 @@ namespace Mag2.Controllers
             }
             this.appTapeRepos.Remove(o);
             this.appTapeRepos.Save();
+            TempData[WebConst.Success] = "Application type delete successfull";
             return RedirectToAction("Index");
         }
     }
