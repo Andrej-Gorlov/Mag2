@@ -217,15 +217,15 @@ namespace Mag2.Controllers
 
             if (User.IsInRole(WebConst.AdminRole))// create an order
             {
-                var orderTotal = 0.0;
-                foreach (Product item in productUserVM.ProductsList)
-                {
-                    orderTotal += item.Price * item.QuantityOfGoods;
-                }
+                //var orderTotal = 0.0;
+                //foreach (Product item in productUserVM.ProductsList)
+                //{
+                //    orderTotal += item.Price * item.QuantityOfGoods;
+                //}
                 OrderHeader orderHeader = new OrderHeader() 
                 {
                     CreatedByUserId=claim.Value,
-                    FinalOrderTotal=orderTotal,
+                    FinalOrderTotal=productUserVM.ProductsList.Sum(x=>x.QuantityOfGoods*x.Price),
                     City=productUserVM.ApplicationUser.City,
                     StreetAddress=productUserVM.ApplicationUser.StreetAddress,
                     State=productUserVM.ApplicationUser.State,

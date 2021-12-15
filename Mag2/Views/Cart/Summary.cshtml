@@ -154,8 +154,9 @@
                                         {
                                             <!--для доступа name и id каждого товара для передачи при подтверждения заказа-->
                                             <input type="hidden" asp-for="@Model.ProductsList[i].Id" />
-
                                             <input type="hidden" asp-for="@Model.ProductsList[i].Name" />
+                                            <input type="hidden" asp-for="@Model.ProductsList[i].Price" />
+                                            <input type="hidden" asp-for="@Model.ProductsList[i].QuantityOfGoods" />
 
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <div>
