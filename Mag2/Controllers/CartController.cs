@@ -42,6 +42,12 @@ namespace Mag2.Controllers
             this.webHostEnvironment = webHostEnvironment;// доступ к папке wwwroot
             this.emailSender = emailSender;
         }
+
+
+
+
+
+
         public IActionResult Index()
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
@@ -54,10 +60,23 @@ namespace Mag2.Controllers
             }
             //все товар из корзины 
             List<int> prodInCart = shoppingCartList.Select(x => x.ProductId).ToList(); 
-            IEnumerable<Product> prodList = this.productRepos.GetAll(x => prodInCart.Contains(x.Id));
+
+            IEnumerable<Product> prodListTemp = this.productRepos.GetAll(x => prodInCart.Contains(x.Id));
+            IList<Product> prodList = new List<Product>();
+
+            foreach (var item in shoppingCartList)
+            {
+                Product prodTemp = prodListTemp.FirstOrDefault(x => x.Id == item.ProductId);
+                prodTemp.QuantityOfGoods = item.unitsOfGoods;
+                prodList.Add(prodTemp);
+            }
 
             return View(prodList);
         }
+
+
+
+
 
         public IActionResult Remove(int id)
         {
@@ -74,44 +93,105 @@ namespace Mag2.Controllers
 
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
             TempData[WebConst.Success] = "The item has been removed from the cart";
-            return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
+            return RedirectToAction(nameof(Index));
         }
+
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateCart(IEnumerable<Product> productsList)
+        {
+            List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
+
+            foreach (var item in productsList)
+            {
+                shoppingCartList.Add(new ShoppingCart { ProductId=item.Id, unitsOfGoods=item.QuantityOfGoods});
+            }
+
+            HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Index")]
-        public IActionResult IndexPost()
+        public IActionResult IndexPost(IEnumerable<Product> productsList)
         {
-           
+            List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
+            foreach (var item in productsList)
+            {
+                shoppingCartList.Add(new ShoppingCart { ProductId = item.Id, unitsOfGoods = item.QuantityOfGoods });
+            }
+            HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
+
             return RedirectToAction(nameof(Summary));
         }
+
+
+
+
         public IActionResult Summary()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity; //id user
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            //var userId = User.FindFirstValue(ClaimTypes.Name);
+            ApplicationUser applicationUser;
+
+            if (User.IsInRole(WebConst.AdminRole))
+            {
+                if (HttpContext.Session.Get<int>(WebConst.SessionInquiryId)!=0)
+                {
+                    //cart  loaded  по запросу
+                    InquiryHeader inquiryHeader = this.inqHeaderRepos.FirstOrDefault(x => x.Id == HttpContext.Session.Get<int>(WebConst.SessionInquiryId));
+                    applicationUser = new ApplicationUser()
+                    {
+                        Email = inquiryHeader.Email,
+                        FullName = inquiryHeader.FullName,
+                        PhoneNumber = inquiryHeader.PhoneNumber
+                    };
+                }
+                else
+                {
+                    applicationUser = new ApplicationUser();
+                }
+            }
+            else
+            {
+                var claimsIdentity = (ClaimsIdentity)User.Identity; //id user
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                //var userId = User.FindFirstValue(ClaimTypes.Name);
+                applicationUser = this.AppUserRepos.FirstOrDefault(x => x.Id == claim.Value);
+            }
 
             //доступ у корзине покупок
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart) != null &&
                 HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart).Count() > 0)
             {
+                //все товар из корзины 
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
-
             }
-            //все товар из корзины 
+            //info o товарах из корзины 
             List<int> prodInCart = shoppingCartList.Select(x => x.ProductId).ToList();
             IEnumerable<Product> prodList = this.productRepos.GetAll(x => prodInCart.Contains(x.Id));
 
-
             ProductUserVM = new ProductUserVM()
             {
-                ApplicationUser = this.AppUserRepos.FirstOrDefault(x => x.Id == claim.Value),// получение доступа к значению индификатора вошедшего в систему User (т.е id зарегистрированного user)(для получения всех сведений user)
-                ProductsList =prodList.ToList() //отображаем все товары в корзине!!!
+                ApplicationUser = applicationUser,// получение доступа к значению индификатора вошедшего в систему User (т.е id зарегистрированного user)(для получения всех сведений user)
+                //ProductsList =prodList.ToList() //отображаем все товары в корзине!!!
             };
 
+            //отображаем все товары в корзине!!!
+            foreach (var item in shoppingCartList)
+            {
+                Product product = this.productRepos.FirstOrDefault(x => x.Id == item.ProductId);
+                product.QuantityOfGoods = item.unitsOfGoods;
+                ProductUserVM.ProductsList.Add(product);
+            }
 
             return View(ProductUserVM);
         }
@@ -128,7 +208,6 @@ namespace Mag2.Controllers
             var claimsIndetity = (ClaimsIdentity)User.Identity;//даные текущего клиента
             var claim = claimsIndetity.FindFirst(ClaimTypes.NameIdentifier);// id user
 
-
             //доступ к шаблону Inquiry.html
             var PathToTemplate = this.webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()// косая черта(Path.DirectorySeparatorChar.ToString())
                 + "templates" + Path.DirectorySeparatorChar.ToString()
@@ -139,7 +218,7 @@ namespace Mag2.Controllers
 
             using(StreamReader sr= System.IO.File.OpenText(PathToTemplate))
             {
-                HtmlBody = sr.ReadToEnd();//
+                HtmlBody = sr.ReadToEnd();
             }
 
             //Name: { 0}
@@ -182,12 +261,15 @@ namespace Mag2.Controllers
                 inqDetailRepos.Add(inquiryDetail);
             }
             inqDetailRepos.Save();
-            //__________________________________________________________________
-
 
             TempData[WebConst.Success] = "Successful confirmation of the request";
-            return RedirectToAction(nameof(InquriyConfirmation));//nameof выбирает только сущ., методы 
+            return RedirectToAction(nameof(InquriyConfirmation));
         }
+
+
+
+
+
         public IActionResult InquriyConfirmation()//Подтверждение запроса
         {
             //clear данных текущий сессии

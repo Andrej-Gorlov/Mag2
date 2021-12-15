@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="col-12 col-md-6 text-md-right">
-                        <h1 class="text-warning"> @((Model.Product.Price).ToString()) &#8381</h1>
+                        <h1 class="text-warning"> @((Model.Product.Price).ToString()) &#8381 </h1>
                     </div>
 
                 </div>
@@ -48,6 +48,29 @@
                                         <p class="text-secondary">@Html.Raw(Model.Product.Description)</p>
 
                                     </div>
+
+                                    @if (User.IsInRole(WebConst.AdminRole))
+                                    {
+                                        <div class="col-12">
+
+                                            Number: 
+
+                                        </div>
+
+                                        <div class="col-12">
+                                            <!--если есть товар в cart-->
+                                            @if (Model.ExistsInCart)
+                                            {
+                                                <input asp-for="@Model.Product.QuantityOfGoods" disabled class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input asp-for="@Model.Product.QuantityOfGoods" class="form-control"/>
+                                            }
+                                            <span asp-validation-for="@Model.Product.QuantityOfGoods" class="text-danger"></span>
+                                        </div>
+                                   
+                                    }
 
                                 </div>
                             </div>

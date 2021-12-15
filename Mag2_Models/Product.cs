@@ -9,6 +9,10 @@ namespace Mag2_Models
 {
     public class Product
     {
+        public Product()
+        {
+            QuantityOfGoods = 1;
+        }
         [Key]
         public int Id { get; set; }
         [Required]// также в EntityFrameworkCore преднозначен для передачи данных в бд  
@@ -34,5 +38,9 @@ namespace Mag2_Models
         public int ApplicationTypeId { get; set; }// связь сущности между Categery и Product
         [ForeignKey("ApplicationTypeId")]//автоматическая связь между текущим объектом и Categery(создаётся столбец id Categery (т.е. внешний ключ))
         public virtual ApplicationType ApplicationType { get; set; }
+
+        [NotMapped]//no add colum in table
+        [Range(1, 100000)]
+        public int QuantityOfGoods { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace Mag2.Controllers
 
         //add товара в крзину___________________
         [HttpPost,ActionName("Details")]
-        public IActionResult DetailsPost(int id)
+        public IActionResult DetailsPost(int id, DetailsVM detailsVM)
         {
             //list корзины покупок
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
@@ -83,7 +83,7 @@ namespace Mag2.Controllers
                 // если есть товар може ещё добавить
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
             }
-            shoppingCartList.Add(new ShoppingCart { ProductId = id });
+            shoppingCartList.Add(new ShoppingCart { ProductId = id, unitsOfGoods=detailsVM.Product.QuantityOfGoods });
             // установка сессии
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
             TempData[WebConst.Success] = "Product added to cart";
