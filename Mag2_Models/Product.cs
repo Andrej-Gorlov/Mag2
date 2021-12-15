@@ -21,7 +21,7 @@ namespace Mag2_Models
         public string ShortDesc { get; set; }// краткое описание
         public string Description { get; set; }//описание
         [Range(1, int.MaxValue)]
-        public string Price { get; set; }
+        public double Price { get; set; }
 
 
         public string Image { get; set; }// ссылка на image

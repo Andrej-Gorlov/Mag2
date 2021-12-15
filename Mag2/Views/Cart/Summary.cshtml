@@ -172,10 +172,10 @@
                                                 </div>
                                                 @if (User.IsInRole(Mag2_Extensions.WebConst.AdminRole))
                                                 {
-                                                    <span class="text-muted"> &#8381 @(int.Parse(Model.ProductsList[i].Price) * Model.ProductsList[i].QuantityOfGoods )</span>
+                                                    <span class="text-muted"> &#8381 @(Model.ProductsList[i].Price * Model.ProductsList[i].QuantityOfGoods )</span>
                                                 }
                                             </li>
-                                            orderTotal += int.Parse(Model.ProductsList[i].Price) * Model.ProductsList[i].QuantityOfGoods;
+                                            orderTotal += Model.ProductsList[i].Price * Model.ProductsList[i].QuantityOfGoods;
                                         }
                                         @if (User.IsInRole(Mag2_Extensions.WebConst.AdminRole))
                                         {

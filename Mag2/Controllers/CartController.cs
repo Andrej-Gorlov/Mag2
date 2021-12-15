@@ -25,6 +25,9 @@ namespace Mag2.Controllers
         private readonly IInquiryHeaderRepository inqHeaderRepos;
         private readonly IInquiryDetailRepository inqDetailRepos;
 
+        private readonly IOrderHeaderRepository orderHeaderRepos;
+        private readonly IOrderDetailRepository orderDetailRepos;
+
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IEmailSender emailSender;
 
@@ -32,12 +35,15 @@ namespace Mag2.Controllers
         public ProductUserVM ProductUserVM { get; set; }
         public CartController(IWebHostEnvironment webHostEnvironment, IEmailSender emailSender,
             IProductRepository productRepos, IApplicationUserRepository AppUserRepos,
-            IInquiryHeaderRepository inqHeaderRepos, IInquiryDetailRepository inqDetailRepos)
+            IInquiryHeaderRepository inqHeaderRepos, IInquiryDetailRepository inqDetailRepos,
+            IOrderHeaderRepository orderHeaderRepos, IOrderDetailRepository orderDetailRepos)
         {
             this.productRepos = productRepos;
             this.AppUserRepos = AppUserRepos;
             this.inqHeaderRepos = inqHeaderRepos;
             this.inqDetailRepos = inqDetailRepos;
+            this.orderHeaderRepos = orderHeaderRepos;
+            this.orderDetailRepos = orderDetailRepos;
 
             this.webHostEnvironment = webHostEnvironment;// доступ к папке wwwroot
             this.emailSender = emailSender;
@@ -208,61 +214,100 @@ namespace Mag2.Controllers
             var claimsIndetity = (ClaimsIdentity)User.Identity;//даные текущего клиента
             var claim = claimsIndetity.FindFirst(ClaimTypes.NameIdentifier);// id user
 
-            //доступ к шаблону Inquiry.html
-            var PathToTemplate = this.webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()// косая черта(Path.DirectorySeparatorChar.ToString())
-                + "templates" + Path.DirectorySeparatorChar.ToString()
-                + "Inquiry.html";// путь к шаблону
 
-            var subject = " New Inquiry ";
-            string HtmlBody = "";
-
-            using(StreamReader sr= System.IO.File.OpenText(PathToTemplate))
+            if (User.IsInRole(WebConst.AdminRole))// create an order
             {
-                HtmlBody = sr.ReadToEnd();
-            }
-
-            //Name: { 0}
-            //Email: { 1}
-            //Phone: { 2}
-            //Products: { 3}
-
-            StringBuilder productListSB = new StringBuilder();
-            foreach (var item in productUserVM.ProductsList)
-            {
-                productListSB.Append($" - Name: {item.Name} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
-            }
-
-            string massegBody = string.Format(HtmlBody,
-                productUserVM.ApplicationUser.FullName,
-                productUserVM.ApplicationUser.Email,
-                productUserVM.ApplicationUser.PhoneNumber,
-                productListSB.ToString());
-
-            await this.emailSender.SendEmailAsync(WebConst.EmailAdmin, subject, massegBody);
-
-            //регистрация InquiryHeader и InquiryDetail в бд ________________________________
-            InquiryHeader inquiryHeader = new InquiryHeader()
-            {
-                ApplicationUserId=claim.Value,
-                FullName = productUserVM.ApplicationUser.FullName,
-                Email = productUserVM.ApplicationUser.Email,
-                PhoneNumber= productUserVM.ApplicationUser.PhoneNumber,
-                InquiryDate=DateTime.Now
-            };
-            this.inqHeaderRepos.Add(inquiryHeader);
-            this.inqHeaderRepos.Save();
-            foreach (var item in productUserVM.ProductsList)
-            {
-                InquiryDetail inquiryDetail = new InquiryDetail()
+                var orderTotal = 0.0;
+                foreach (Product item in productUserVM.ProductsList)
                 {
-                    InquiryHeaderId= inquiryHeader.Id,
-                    ProductId= item.Id
+                    orderTotal += item.Price * item.QuantityOfGoods;
+                }
+                OrderHeader orderHeader = new OrderHeader() 
+                {
+                    CreatedByUserId=claim.Value,
+                    FinalOrderTotal=orderTotal,
+                    City=productUserVM.ApplicationUser.City,
+                    StreetAddress=productUserVM.ApplicationUser.StreetAddress,
+                    State=productUserVM.ApplicationUser.State,
+                    PostalCode=productUserVM.ApplicationUser.PostalCode,
+                    FullName=productUserVM.ApplicationUser.FullName,
+                    Email=productUserVM.ApplicationUser.Email,
+                    PhoneNumber=productUserVM.ApplicationUser.PhoneNumber,
+                    OrderDate=DateTime.Now,
+                    OrderStatus=WebConst.StatusPending
                 };
-                inqDetailRepos.Add(inquiryDetail);
-            }
-            inqDetailRepos.Save();
+                this.orderHeaderRepos.Add(orderHeader);
+                this.orderHeaderRepos.Save();
 
-            TempData[WebConst.Success] = "Successful confirmation of the request";
+                foreach (var item in productUserVM.ProductsList)
+                {
+                    OrderDetail orderDetail = new OrderDetail()
+                    {
+                        OrderHeaderId=orderHeader.Id,
+                        PricePerQuantity= item.Price,
+                        Quantity=item.QuantityOfGoods,
+                        ProductId = item.Id
+                    };
+                    this.orderDetailRepos.Add(orderDetail);
+                }
+                this.orderDetailRepos.Save();
+                return RedirectToAction(nameof(InquriyConfirmation), new { id=orderHeader.Id});
+            }
+            else// create in inquiry
+            {
+                //доступ к шаблону Inquiry.html
+                var PathToTemplate = this.webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()// косая черта(Path.DirectorySeparatorChar.ToString())
+                    + "templates" + Path.DirectorySeparatorChar.ToString()
+                    + "Inquiry.html";// путь к шаблону
+
+                var subject = " New Inquiry ";
+                string HtmlBody = "";
+
+                using (StreamReader sr = System.IO.File.OpenText(PathToTemplate))
+                {
+                    HtmlBody = sr.ReadToEnd();
+                }
+                //Name: { 0}
+                //Email: { 1}
+                //Phone: { 2}
+                //Products: { 3}
+                StringBuilder productListSB = new StringBuilder();
+                foreach (var item in productUserVM.ProductsList)
+                {
+                    productListSB.Append($" - Name: {item.Name} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
+                }
+
+                string massegBody = string.Format(HtmlBody,
+                    productUserVM.ApplicationUser.FullName,
+                    productUserVM.ApplicationUser.Email,
+                    productUserVM.ApplicationUser.PhoneNumber,
+                    productListSB.ToString());
+
+                await this.emailSender.SendEmailAsync(WebConst.EmailAdmin, subject, massegBody);
+
+                //регистрация InquiryHeader и InquiryDetail в бд ________________________________
+                InquiryHeader inquiryHeader = new InquiryHeader()
+                {
+                    ApplicationUserId = claim.Value,
+                    FullName = productUserVM.ApplicationUser.FullName,
+                    Email = productUserVM.ApplicationUser.Email,
+                    PhoneNumber = productUserVM.ApplicationUser.PhoneNumber,
+                    InquiryDate = DateTime.Now
+                };
+                this.inqHeaderRepos.Add(inquiryHeader);
+                this.inqHeaderRepos.Save();
+                foreach (var item in productUserVM.ProductsList)
+                {
+                    InquiryDetail inquiryDetail = new InquiryDetail()
+                    {
+                        InquiryHeaderId = inquiryHeader.Id,
+                        ProductId = item.Id
+                    };
+                    inqDetailRepos.Add(inquiryDetail);
+                }
+                inqDetailRepos.Save();
+                TempData[WebConst.Success] = "Successful confirmation of the request";
+            }
             return RedirectToAction(nameof(InquriyConfirmation));
         }
 
