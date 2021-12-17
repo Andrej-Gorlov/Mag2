@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mag2_DataAcces.RepositoryPattern.IRepository;
 using Mag2_DataAcces.RepositoryPattern;
+using Mag2_Extensions.BrainTree;
 
 namespace Mag2
 {
@@ -43,6 +44,7 @@ namespace Mag2
 
             //регистрация email services
             services.AddTransient<IEmailSender, EmailSender>();// при каждом запросе на email services будет cerat new объект и предоставлен для запроса 
+            services.AddSingleton<IBrainTreeGate, BrainTreeGet>();
 
             services.AddDistributedMemoryCache();
             services.AddHttpContextAccessor();// добовляем сервисы (для добовления товара в корзину)
@@ -52,6 +54,8 @@ namespace Mag2
                 x.Cookie.HttpOnly = true;
                 x.Cookie.IsEssential = true;
             });
+
+            services.Configure<BrainTreeSettings>(Configuration.GetSection("BrainTree"));
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();//регистрация ICategoryRepository
             services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();// IApplicationTypeRepository

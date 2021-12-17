@@ -14,6 +14,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Mag2_DataAcces.RepositoryPattern.IRepository;
+using Mag2_Extensions.BrainTree;
+using Microsoft.AspNetCore.Http;
+using Braintree;
 
 namespace Mag2.Controllers
 {
@@ -30,13 +33,15 @@ namespace Mag2.Controllers
 
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IEmailSender emailSender;
+        private readonly IBrainTreeGate brain;
 
         [BindProperty]//привязка для post запросов (т.е  можем не явно указывать в action metod в параметрах)
         public ProductUserVM ProductUserVM { get; set; }
         public CartController(IWebHostEnvironment webHostEnvironment, IEmailSender emailSender,
             IProductRepository productRepos, IApplicationUserRepository AppUserRepos,
             IInquiryHeaderRepository inqHeaderRepos, IInquiryDetailRepository inqDetailRepos,
-            IOrderHeaderRepository orderHeaderRepos, IOrderDetailRepository orderDetailRepos)
+            IOrderHeaderRepository orderHeaderRepos, IOrderDetailRepository orderDetailRepos,
+            IBrainTreeGate brain)
         {
             this.productRepos = productRepos;
             this.AppUserRepos = AppUserRepos;
@@ -47,6 +52,7 @@ namespace Mag2.Controllers
 
             this.webHostEnvironment = webHostEnvironment;// доступ к папке wwwroot
             this.emailSender = emailSender;
+            this.brain = brain;
         }
 
 
@@ -101,7 +107,11 @@ namespace Mag2.Controllers
             TempData[WebConst.Success] = "The item has been removed from the cart";
             return RedirectToAction(nameof(Index));
         }
-
+        public IActionResult Clear()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index","Home");
+        }
 
 
 
@@ -164,6 +174,12 @@ namespace Mag2.Controllers
                 {
                     applicationUser = new ApplicationUser();
                 }
+
+                //настройка шлюза в braintree
+                var gateway =this.brain.GetGatewa();
+                var clientToken = gateway.ClientToken.Generate();
+                ViewBag.ClientToken = clientToken;
+
             }
             else
             {
@@ -208,7 +224,7 @@ namespace Mag2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Summary")]
-        public async Task<IActionResult> SummaryPost(ProductUserVM productUserVM)//productUserVM передаются все товары из корзины 
+        public async Task<IActionResult> SummaryPost(IFormCollection collection, ProductUserVM productUserVM)//productUserVM передаются все товары из корзины 
         {
             //find id user
             var claimsIndetity = (ClaimsIdentity)User.Identity;//даные текущего клиента
@@ -251,6 +267,37 @@ namespace Mag2.Controllers
                     this.orderDetailRepos.Add(orderDetail);
                 }
                 this.orderDetailRepos.Save();
+
+
+
+                string nonceFromTheClient = collection["payment_method_nonce"];
+                var request = new TransactionRequest
+                {
+                    Amount = Convert.ToDecimal(orderHeader.FinalOrderTotal),
+                    PaymentMethodNonce = nonceFromTheClient,
+                    OrderId = orderHeader.Id.ToString(),
+                    Options = new TransactionOptionsRequest
+                    {
+                        SubmitForSettlement = true
+                    }
+                };
+                var gateway = this.brain.GetGatewa();
+                Result<Transaction> result = gateway.Transaction.Sale(request);
+
+                if (result.Target!=null)
+                {
+                    if (result.Target.ProcessorResponseText == "Approved")
+                     {
+                        orderHeader.TransactionId = result.Target.Id;
+                        orderHeader.OrderStatus = WebConst.StatusApproved;
+                    }
+                    else
+                    {
+                        orderHeader.OrderStatus = WebConst.StatusCancelled;
+                    }
+                    this.orderHeaderRepos.Save();
+                }
+
                 return RedirectToAction(nameof(InquriyConfirmation), new { id=orderHeader.Id});
             }
             else// create in inquiry
@@ -315,12 +362,12 @@ namespace Mag2.Controllers
 
 
 
-        public IActionResult InquriyConfirmation()//Подтверждение запроса
+        public IActionResult InquriyConfirmation(int id=0)//Подтверждение запроса
         {
+            OrderHeader orderHeader = this.orderHeaderRepos.FirstOrDefault(x => x.Id == id);
             //clear данных текущий сессии
             HttpContext.Session.Clear();
-
-            return View(ProductUserVM);
+            return View(orderHeader);
         }
 
     }
