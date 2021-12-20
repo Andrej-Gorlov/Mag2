@@ -34,16 +34,17 @@ namespace Mag2
 
             services.AddDbContext<ApplicationDbContext>(o =>
             o.UseSqlServer(
-                Configuration.GetConnectionString("DefConnection")));//подключение sqlserver
+                Configuration.GetConnectionString("DefConnection")));//подключение к бд
 
             services.AddIdentity<IdentityUser, IdentityRole>()//подключенияе IdentityDbContext, устонавливаем пакет .AspNetCore.Identity.UI
                 .AddDefaultTokenProviders()//предостовление токинов по умолчанию (позволяет получить токен при потери пароля)
-                .AddDefaultUI()//
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();//AddEntityFrameworkStores при migration creat table в db 
 
 
             //регистрация email services
             services.AddTransient<IEmailSender, EmailSender>();// при каждом запросе на email services будет cerat new объект и предоставлен для запроса 
+            
             services.AddSingleton<IBrainTreeGate, BrainTreeGet>();
 
             services.AddDistributedMemoryCache();
@@ -58,15 +59,20 @@ namespace Mag2
             services.Configure<BrainTreeSettings>(Configuration.GetSection("BrainTree"));
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();//регистрация ICategoryRepository
-            services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();// IApplicationTypeRepository
-            services.AddScoped<IProductRepository, ProductRepository>();// IProductRepository
+            services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IInquiryHeaderRepository, InquiryHeaderRepository>();
             services.AddScoped<IInquiryDetailRepository, InquiryDetailRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 
+            services.AddAuthentication().AddFacebook(Options=>
+            { 
+                Options.AppId = "912877179413405";
+                Options.AppSecret = "7f1b0d8a0df72c6c2ffb6dcb12fdb961";
+            });
+       
             services.AddControllersWithViews();
         }
 
