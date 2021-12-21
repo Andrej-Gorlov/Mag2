@@ -27,7 +27,7 @@ using Mag2_Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6a1650c8c538218c2342cabd0bf854c77e7483d4", @"/Views/Cart/InquriyConfirmation.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"cd9cc2d63abaf5f6a4fe22abe30ed27a85d80948", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27037070e997785fe18886cdccd2e34d4beae154", @"/Views/_ViewImports.cshtml")]
     public class Views_Cart_InquriyConfirmation : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Mag2_Models.OrderHeader>
     {
         #pragma warning disable 1998

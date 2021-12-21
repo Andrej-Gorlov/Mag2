@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "v2oqKzvE3NWuW3W7VD6txCFN6rDcM5oh6UKLwGRQqtRMi2ynMC4W5QPUSJnkTKlRHf8NMtTe4wTHb+Stv80uvg==",
+  "dgSpecHash": "tonRn6lRUeQ1/Q4M0O5msyycPOvaawYUIvcH+TMpnIPO+wfft9NUScuHMUNFJMPIo9HrsSsgvKV1ll7WcgbDaQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\admin\\source\\repos\\Mag2\\Mag2\\Mag2.csproj",
   "expectedPackageFiles": [
@@ -117,6 +117,8 @@
     "C:\\Users\\admin\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\syncfusion.ej2.aspnet.core\\18.1.0.59\\syncfusion.ej2.aspnet.core.18.1.0.59.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\syncfusion.licensing\\18.1.0.59\\syncfusion.licensing.18.1.0.59.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

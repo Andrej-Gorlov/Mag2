@@ -505,3 +505,7 @@ C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Shared\_Notif
 C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\Braintree.dll
 C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
 C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\Syncfusion.EJ2.dll
+C:\Users\admin\source\repos\Mag2\Mag2\bin\Debug\net5.0\Syncfusion.Licensing.dll
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Order\Index.cshtml.g.cs
+C:\Users\admin\source\repos\Mag2\Mag2\obj\Debug\net5.0\Razor\Views\Order\Details.cshtml.g.cs

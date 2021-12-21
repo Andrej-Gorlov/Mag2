@@ -314,10 +314,8 @@ namespace Mag2.Controllers
                 {
                     HtmlBody = sr.ReadToEnd();
                 }
-                //Name: { 0}
-                //Email: { 1}
-                //Phone: { 2}
-                //Products: { 3}
+
+
                 StringBuilder productListSB = new StringBuilder();
                 foreach (var item in productUserVM.ProductsList)
                 {
