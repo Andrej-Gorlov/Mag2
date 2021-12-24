@@ -101,9 +101,8 @@ namespace Mag2.Areas.Identity.Pages.Account
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, 
                     PhoneNumber=Input.PhoneNumber, FullName=Input.FullName};
 
-
-
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
 
@@ -141,10 +140,12 @@ namespace Mag2.Areas.Identity.Pages.Account
 
                         if (!User.IsInRole(WebConst.AdminRole))//т.е данный user уже зарегистрирован
                         {
+
                             await _signInManager.SignInAsync(user, isPersistent: false);
                         }
                         else
                         {
+                            TempData[WebConst.Success] = user.FullName + "has been registered";
                             return RedirectToAction("Index");
                         }
 

@@ -62,11 +62,11 @@
 
                             <hr />
 
-                            @{ 
+                            @{
                                 var orderTotal = 0.0;
                             }
 
-                            @for (int i=0; i < Model.Count() ; i++)
+                            @for (int i = 0; i < Model.Count(); i++)
                             {
                                 <input hidden asp-for="@Model[i].Id" />
                                 <div class="row h-100">
@@ -76,7 +76,7 @@
                                     </div>
                                     @if (User.IsInRole(WebConst.AdminRole))
                                     {
-                                         <div class="col-8 col-lg-3">
+                                        <div class="col-8 col-lg-3">
                                             <h5>@Model[i].Name</h5>
                                             <div style="font-size:11px;">@Model[i].ShortDesc</div>
                                         </div>
@@ -100,12 +100,13 @@
                                         <div class="col-4 col-lg-2 pt-lg-4" style="font-size:11px;">
 
                                             <input type="text" asp-for="@Model[i].QuantityOfGoods" class="form-control" />
+                                            <span asp-validation-for="@Model[i].QuantityOfGoods" class="text-danger"></span>
 
                                         </div>
 
                                         <div class="col-3 col-lg-2 pt-lg-4" style="font-size:11px;">
 
-                                            <span style="font-size:17px;">@(Model[i].Price * Model[i].QuantityOfGoods)</span>/ &#8381
+                                            <span style="font-size:17px;">&#8381 / @(Model[i].Price * Model[i].QuantityOfGoods)</span>
 
                                         </div>
                                     }
@@ -118,12 +119,12 @@
                                         </a>
 
                                     </div>
-                                    
+
                                 </div>
 
                                 orderTotal += Model[i].Price * Model[i].QuantityOfGoods;
 
-                            <hr />
+                                <hr />
                             }
 
                             @if (User.IsInRole(WebConst.AdminRole))
@@ -141,24 +142,24 @@
                         <div class="card-footer">
 
                             <div class="row">
-                                    <div class="col-6 col-md-3 offset-md-6">
-                                        @if (User.IsInRole(WebConst.AdminRole))
-                                        {
-                                            <input type="submit" asp-action="UpdateCart" formmethod="post" name="Update" value="Update Cart"
-                                                   class="btn btn-info form-control" style="border-radius:0px 15px"/> 
-                                        }
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <!--Продолжение покупок-->
-                                        <button type="submit" class="btn btn-success form-control " style="border-radius:15px 0px">
-                                            <span>Continue</span>
-                                        </button>
-
-                                    </div>
+                                <div class="col-6 col-md-3 offset-md-6">
+                                    @if (User.IsInRole(WebConst.AdminRole))
+                                    {
+                                        <input type="submit" asp-action="UpdateCart" formmethod="post" name="Update" value="Update Cart"
+                                               class="btn btn-info form-control" style="border-radius:0px 15px" />
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <!--Продолжение покупок-->
+                                    <button type="submit" class="btn btn-success form-control " style="border-radius:15px 0px">
+                                        <span>Continue</span>
+                                    </button>
 
                                 </div>
 
                             </div>
+
+                        </div>
 
 
 
@@ -172,4 +173,8 @@
 else
 {
     <p>Plese add items to cart. </p>
+}
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
 }

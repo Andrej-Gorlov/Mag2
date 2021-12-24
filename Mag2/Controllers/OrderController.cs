@@ -1,6 +1,8 @@
-﻿using Mag2_DataAcces.RepositoryPattern.IRepository;
+﻿using Braintree;
+using Mag2_DataAcces.RepositoryPattern.IRepository;
 using Mag2_Extensions;
 using Mag2_Extensions.BrainTree;
+using Mag2_Models;
 using Mag2_Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -64,6 +66,67 @@ namespace Mag2.Controllers
                 OrderDetail=this.orderDetailRepos.GetAll(x=>x.OrderHeaderId==id,includeProperties:"Product")
             };
             return View(orderVM);
+        }
+
+        [HttpPost]
+        public IActionResult StartProcessing()
+        {
+            OrderHeader orderHeader = this.orderHeaderRepos.FirstOrDefault(x => x.Id == orderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WebConst.StatusInProcess;
+            this.orderHeaderRepos.Save();
+            TempData[WebConst.Success] = "Order is In Processing";
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult ShipOrder()
+        {
+            OrderHeader orderHeader = this.orderHeaderRepos.FirstOrDefault(x => x.Id == orderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WebConst.StatusShipped;
+            orderHeader.ShippingDate = DateTime.Now;
+            this.orderHeaderRepos.Save();
+            TempData[WebConst.Success] = "Order shipped Susscessfully";
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult CancelOrder()
+        {
+            OrderHeader orderHeader = this.orderHeaderRepos.FirstOrDefault(x => x.Id == orderVM.OrderHeader.Id);
+
+            var gateway = this.brain.GetGatewa();
+            Transaction transaction = gateway.Transaction.Find(orderHeader.TransactionId);
+
+            if (transaction.Status==TransactionStatus.AUTHORIZED || transaction.Status == TransactionStatus.SUBMITTED_FOR_SETTLEMENT)
+            {
+                //no refund 
+                Result<Transaction> resultvoid = gateway.Transaction.Void(orderHeader.TransactionId);
+            }
+            else
+            {
+                //refund 
+                Result<Transaction> resultRefund = gateway.Transaction.Refund(orderHeader.TransactionId);
+            }
+
+            orderHeader.OrderStatus = WebConst.StatusRefunded;
+            this.orderHeaderRepos.Save();
+            TempData[WebConst.Success] = "Order cancelled Susscessfully";
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult UpdateOrderDetails()
+        {
+            OrderHeader orderHeaderFromDb = this.orderHeaderRepos.FirstOrDefault(x => x.Id == orderVM.OrderHeader.Id);
+
+            orderHeaderFromDb.FullName = orderVM.OrderHeader.FullName;
+            orderHeaderFromDb.PhoneNumber = orderVM.OrderHeader.PhoneNumber;
+            orderHeaderFromDb.StreetAddress = orderVM.OrderHeader.StreetAddress;
+            orderHeaderFromDb.City = orderVM.OrderHeader.City;
+            orderHeaderFromDb.State = orderVM.OrderHeader.State;
+            orderHeaderFromDb.PostalCode = orderVM.OrderHeader.PostalCode;
+            orderHeaderFromDb.Email = orderVM.OrderHeader.Email;
+
+            this.orderHeaderRepos.Save();
+            TempData[WebConst.Success] = "Order details update Susscessfully";
+            return RedirectToAction("Details", "Order",new { id= orderHeaderFromDb.Id});
         }
     }
 }

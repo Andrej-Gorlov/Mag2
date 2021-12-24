@@ -40,7 +40,7 @@ namespace Mag2_Models
         public virtual ApplicationType ApplicationType { get; set; }
 
         [NotMapped]//no add colum in table
-        [Range(1, 100000)]
+        [Range(1, 100000,ErrorMessage = "Quantity Of Goods must be greater than 0.")]
         public int QuantityOfGoods { get; set; }
     }
 }
