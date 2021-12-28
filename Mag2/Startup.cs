@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Mag2_DataAcces.RepositoryPattern.IRepository;
 using Mag2_DataAcces.RepositoryPattern;
 using Mag2_Extensions.BrainTree;
+using Mag2_DataAcces.Initializer;
 
 namespace Mag2
 {
@@ -66,6 +67,7 @@ namespace Mag2
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddAuthentication().AddFacebook(Options=>
             { 
@@ -77,7 +79,7 @@ namespace Mag2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -94,9 +96,11 @@ namespace Mag2
 
             app.UseRouting();
 
-            app.UseAuthentication();//добовление authentication в контейнер
+            app.UseAuthentication();
 
             app.UseAuthorization();
+
+            dbInitializer.Initialize();
 
             app.UseSession();//добавляем сессию в контейнер (services.AddSession(x =>x...))
 

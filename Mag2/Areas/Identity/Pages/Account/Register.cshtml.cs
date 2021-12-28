@@ -80,11 +80,11 @@ namespace Mag2.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!await _roleManager.RoleExistsAsync(WebConst.AdminRole))//creat role admina при first регистрации
-            {
-                await _roleManager.CreateAsync(new IdentityRole(WebConst.AdminRole));
-                await _roleManager.CreateAsync(new IdentityRole(WebConst.CustomerRole));
-            }
+            //if (!await _roleManager.RoleExistsAsync(WebConst.AdminRole))//creat role admina при first регистрации
+            //{
+            //    await _roleManager.CreateAsync(new IdentityRole(WebConst.AdminRole));
+            //    await _roleManager.CreateAsync(new IdentityRole(WebConst.CustomerRole));
+            //}
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

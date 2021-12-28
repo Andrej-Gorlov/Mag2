@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Этот файл используется процессом публикации или упаковки вашего веб-проекта. Можно настроить поведение этого процесса,
+изменив этот файл MSBuild. Подробности см. на странице https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA78TfStCuWEKDt55Ct/dQswAAAAACAAAAAAAQZgAAAAEAACAAAAC7eKRGdTh1bPnWInMUPqbhNmVQIQMpGTccyoY5LKfYigAAAAAOgAAAAAIAACAAAAA4zZN5okUH3jypFORotrkAsKKypfZ01AjhkXAd9Zx094AAAAC9b1lK2nl2e4thM16udogFG1kgl1Qg1yPqc/OTMj/VVjPF3c1Zyx948kOywICfYq5AyyNf82/qE+veJg0eiItSeuAiYctgUXcepnqcNBslpFC7YFHgrSECjj/NorQz2hy8rTpvVgx6IOsxL30A4gkiQTq9TLI0T9HfzHTl/8IkB0AAAABChrWTGseeXRg+w7pLEKCjR/oi1IkDMa7skvu9pnCohSqgI5zLMWJm8lp5S56Re//q9jraZZNSesfEkgsTvCTy</EncryptedPassword>
+    <History>True|2021-12-28T10:57:47.3132971Z;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefConnection">
+      <Value>Data Source=tcp:mag22.database.windows.net,1433%3bInitial Catalog=Mag22_db%3bUser Id=adminuser%40mag22%3bPassword=Qazxc123!</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

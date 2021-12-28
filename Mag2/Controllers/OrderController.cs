@@ -4,6 +4,7 @@ using Mag2_Extensions;
 using Mag2_Extensions.BrainTree;
 using Mag2_Models;
 using Mag2_Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Mag2.Controllers
 {
+    [Authorize(Roles = WebConst.AdminRole)]
     public class OrderController : Controller
     {
         private readonly IOrderHeaderRepository orderHeaderRepos;
