@@ -18,7 +18,7 @@ namespace Mag2.Controllers
         private readonly IApplicationTypeRepository appTapeRepos;
         public ApplicationTypeController(IApplicationTypeRepository appTapeRepos)
         {
-            this.appTapeRepos = appTapeRepos;// доступ к бд для получения данных
+            this.appTapeRepos = appTapeRepos;
         }
 
         public IActionResult Index()
@@ -31,13 +31,12 @@ namespace Mag2.Controllers
             return View();
         }
 
-        //Добовление в БД
-        [HttpPost]//явное определения экшин метота типа post
-        [ValidateAntiForgeryToken]//защита от взлома
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Creat(ApplicationType obj)
         {
             this.appTapeRepos.Add(obj);
-            this.appTapeRepos.Save();//передача?(проверка) и сохранения изминений
+            this.appTapeRepos.Save();
             TempData[WebConst.Success] = "Application type creat successfull";
             return RedirectToAction("Index");
         }
@@ -47,7 +46,7 @@ namespace Mag2.Controllers
 
 
 
-        //get-edit___________________________________________________________________________________
+
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -55,7 +54,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.appTapeRepos.Find(id.GetValueOrDefault());// Find работает с атребутами первичного ключа
+            var o = this.appTapeRepos.Find(id.GetValueOrDefault());// Find работает с атрибутами первичного ключа
 
             if (o == null)
             {
@@ -63,7 +62,7 @@ namespace Mag2.Controllers
             }
             return View(o);
         }
-        //Добовление изминения в БД
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ApplicationType obj)
@@ -79,7 +78,7 @@ namespace Mag2.Controllers
             return View(obj);
         }
 
-        //get-delete___________________________________________________________________________________
+
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -95,7 +94,7 @@ namespace Mag2.Controllers
             }
             return View(o);
         }
-        //Удаление в БД
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)

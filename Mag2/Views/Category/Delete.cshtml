@@ -1,11 +1,11 @@
 ﻿
-<!--ссылка на модель для ввода новых значений-->
+
 @model Mag2_Models.Category
 
 <form method="post" asp-action="DeletePost">
     <!--явно указываем какой метод нужно вызвать "DeletePost"-->
 
-    <input asp-for="Id" hidden /><!-- нужно для опредидения id (что-бы был доступен в методе UEdit(Categery o)!!!) hidden делает скрытым-->
+    <input asp-for="Id" hidden />
 
     <div class="border p-3 bg-white">
 
@@ -21,10 +21,10 @@
                 <div class="form-group row py-2">
 
                     <div class="col-4">
-                        <label asp-for="Name"></label><!--помещая значения в (label) и используя (asp-for) в дальнейшем можем разделять слова в объектах Модели напрмер (Categery) используя атрибут анатации данных-->
+                        <label asp-for="Name"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Name" disabled class="form-control" /><!--textbox привязка к свойству Name (disabled- не допустим для ввода)-->
+                        <input asp-for="Name" disabled class="form-control" />
                     </div>
 
                 </div>
@@ -71,7 +71,7 @@
 
 
 
-<!--Валедация на стороне клиента-->
+
 @section Scripts{
 
     @{

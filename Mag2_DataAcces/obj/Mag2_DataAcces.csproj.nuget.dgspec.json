@@ -85,11 +85,6 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
-      },
-      "runtimes": {
-        "win-x86": {
-          "#import": []
-        }
       }
     },
     "C:\\Users\\admin\\source\\repos\\Mag2\\Mag2_Extensions\\Mag2_Extensions.csproj": {
@@ -162,11 +157,6 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
-      },
-      "runtimes": {
-        "win-x86": {
-          "#import": []
-        }
       }
     },
     "C:\\Users\\admin\\source\\repos\\Mag2\\Mag2_Models\\Mag2_Models.csproj": {
@@ -234,11 +224,6 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win-x86": {
-          "#import": []
         }
       }
     }

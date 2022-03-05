@@ -41,7 +41,7 @@ namespace Mag2_DataAcces.RepositoryPattern
 
         public void Update(Product obj)
         {
-            this.db.Product.Update(obj);//update all
+            this.db.Product.Update(obj);
         }
     }
 }

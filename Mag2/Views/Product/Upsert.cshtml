@@ -1,4 +1,4 @@
-﻿<!--ссылка на модель для ввода новых значений-->
+﻿
 @model Mag2_Models.ViewModels.ProductVM
 @using Mag2_Extensions
 
@@ -11,7 +11,7 @@
     @if (Model.Product.Id != 0) // если будет создания то id не будет определено
     {
         title = "Edit Product";
-        <input asp-for="Product.Id" hidden /><!-- нужно для опредидения id (что-бы был доступен в методе UEdit(Categery o)!!!) hidden делает скрытым-->
+    <input asp-for="Product.Id" hidden /><!-- нужно для опредидения id (что-бы был доступен в методе UEdit(Categery o)!!!) hidden делает скрытым-->
     }
 
     <div class="border p-3 bg-white">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="Product.Price" class="form-control" />
-                        <span asp-validation-for="Product.Price" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="Product.Price" class="text-danger"></span><!--validation-for вполне достаточно + валидация на стороне клиента-->
                     </div>
 
                 </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="Product.ShortDesc" class="form-control" />
-                        <span asp-validation-for="Product.ShortDesc" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="Product.ShortDesc" class="text-danger"></span><!--validation-for вполне достаточно + валидация на стороне клиента-->
                     </div>
 
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-8">
                         <textarea asp-for="Product.Description" class="form-control summernote"></textarea><!--textarea и класс summernote (add редактор)-->
-                        <span asp-validation-for="Product.Description" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="Product.Description" class="text-danger"></span><!--validation-for вполне достаточно + валидация на стороне клиента-->
                     </div>
 
                 </div>
@@ -80,7 +80,7 @@
                         Image
                     </div>
                     <div class="col-8">
-                        <input type="file" name="file" id="uploadBox" multiple class="form-control" /><!--type="file" для добовления файлов -->
+                        <input type="file" name="file" id="uploadBox" multiple class="form-control" /><!--type="file" для добавления файлов -->
                     </div>
 
                 </div>
@@ -97,7 +97,7 @@
                             <!--раскрывающий список-->
                             <option disabled selected>--Select Category--</option><!--disabled отключает выбор-->
                         </select>
-                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span><!--validation-for вполне достаточно + валидация на стороне клиента-->
                     </div>
 
                 </div>
@@ -112,7 +112,7 @@
                             <!--раскрывающий список-->
                             <option disabled selected>--Select Application Type--</option><!--disabled отключает выбор-->
                         </select>
-                        <span asp-validation-for="Product.ApplicationTypeId" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="Product.ApplicationTypeId" class="text-danger"></span><!--validation-for вполне достаточно + валидация на стороне клиента-->
                     </div>
 
                 </div>
@@ -126,11 +126,11 @@
                         <div class="col">
                             @if (Model.Product.Id != 0)//update
                             {
-                                <input type="submit" class="btn btn-info w-100" value="Update!" />
+                            <input type="submit" class="btn btn-info w-100" value="Update!" />
                             }
                             else//create
                             {
-                                <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="Create!!" />
+                            <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="Create!!" />
                             }
                         </div>
 
@@ -150,7 +150,7 @@
                 @* Keep this empty *@
                 @if (Model.Product.Id != 0)
                 {
-                    <img src="@WebConst.ImagePath@Model.Product.Image" class="w-100" style="border-radius:0px 15px; border:2px solid #00c9cf" />
+                <img src="@WebConst.ImagePath@Model.Product.Image" class="w-100" style="border-radius:0px 15px; border:2px solid #00c9cf" />
                 }
 
             </div>
@@ -162,7 +162,7 @@
 </form>
 
 
-<!--Валедация на стороне клиента-->
+<!--Валидация на стороне клиента-->
 @section Scripts{
 
     @{
@@ -176,7 +176,7 @@
                     height: 250
                 });
             });
-            /* validateInput() ИСПОЛЬЗУЕМ ДЛЯ обновлениея товара (т.е если не добавили img будет всплывать окно уведомления)*/
+            /* validateInput() ИСПОЛЬЗУЕМ ДЛЯ обновления товара (т.е если не добавили img будет всплывать окно уведомления)*/
             function validateInput() {
                 if (document.getElementById("uploadBox").value == "") {
                     Swal.fire({

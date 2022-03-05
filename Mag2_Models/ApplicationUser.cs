@@ -12,7 +12,6 @@ namespace Mag2_Models
     {
         [Required]
         public string FullName { get; set; }//add FullName  в table AspNetUser
-
         [NotMapped]
         public string StreetAddress { get; set; }
         [NotMapped]
@@ -21,6 +20,5 @@ namespace Mag2_Models
         public string State { get; set; }
         [NotMapped]
         public string PostalCode { get; set; }
-
     }
 }

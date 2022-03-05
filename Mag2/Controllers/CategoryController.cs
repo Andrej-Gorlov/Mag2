@@ -26,24 +26,23 @@ namespace Mag2.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objList = catRepos.GetAll();// записываем данные из таблицы Categery в объект "objList"
+            IEnumerable<Category> objList = catRepos.GetAll();
 
             return View(objList);
         }
 
 
-        //get-creat___________________________________________________________________________________
+
         public IActionResult Creat()
         {
             return View();
         }
 
-        //Добовление в БД
-        [HttpPost]//явное определения экшин метота типа post
-        [ValidateAntiForgeryToken]//защита от взлома
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Creat(Category obj)
         {
-            // выполненены все ли правела для модели (т.е валидные)
             if (ModelState.IsValid)
             {
                 this.catRepos.Add(obj);
@@ -56,7 +55,6 @@ namespace Mag2.Controllers
         }
 
 
-        //get-edit___________________________________________________________________________________
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -64,7 +62,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
 
-            var o = this.catRepos.Find(id.GetValueOrDefault());// Find работает с атребутами первичного ключа
+            var o = this.catRepos.Find(id.GetValueOrDefault());
 
             if (o == null)
             {
@@ -73,7 +71,6 @@ namespace Mag2.Controllers
             return View(o);
         }
 
-        //Добовление изминения в БД
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category obj)
@@ -91,7 +88,7 @@ namespace Mag2.Controllers
 
 
 
-        //get-delete___________________________________________________________________________________
+
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -108,7 +105,7 @@ namespace Mag2.Controllers
             return View(o);
         }
 
-        //Удаление в БД
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)

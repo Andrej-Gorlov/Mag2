@@ -5,7 +5,27 @@
       "ProjectGuid": "64e56987-6d08-4e0a-a647-f68e514b8653",
       "DisplayName": "Mag2",
       "ColorIndex": 0
+    },
+    "485a32be-332e-4ddf-95b1-b468a91eb040": {
+      "ProjectGuid": "485a32be-332e-4ddf-95b1-b468a91eb040",
+      "DisplayName": "Mag2_DataAcces",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    },
+    "f9e73272-4218-4e51-aaba-3b058c92755f": {
+      "ProjectGuid": "f9e73272-4218-4e51-aaba-3b058c92755f",
+      "DisplayName": "Mag2_Models",
+      "ColorIndex": 2
+    },
+    "224fd7c6-8a5e-453a-931a-c870c914dd8b": {
+      "ProjectGuid": "224fd7c6-8a5e-453a-931a-c870c914dd8b",
+      "DisplayName": "Mag2_Extensions",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 4
 }

@@ -20,7 +20,7 @@ namespace Mag2.Controllers
     public class ProductController : Controller
     {
         private readonly IProductRepository productRepos;
-        private readonly IWebHostEnvironment _webHostEnvironment;//(используем паттерн зависимости)
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductController(IProductRepository productRepos, IWebHostEnvironment IWHE)
         {
             this.productRepos = productRepos;
@@ -31,7 +31,7 @@ namespace Mag2.Controllers
 
         public IActionResult Index()
         {
-            // Обращаемся к бд единыжды(получение Name)
+            // Обращаемся к бд единожды(получение Name)
             IEnumerable<Product> objList = this.productRepos.GetAll(includeProperties:"Category,ApplicationType");
 
 
@@ -91,12 +91,11 @@ namespace Mag2.Controllers
         }
 
 
-        //Добовление в БД
-        [HttpPost]//явное определения экшин метота типа post
+
+        [HttpPost]
         [ValidateAntiForgeryToken]//защита от взлома
         public IActionResult Upsert(ProductVM proMV)
         {
-            // выполненены все ли правела для модели (т.е валидные)
             if (ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;//извлекаем img
@@ -109,16 +108,16 @@ namespace Mag2.Controllers
                     string feilName = Guid.NewGuid().ToString();//случайное new имя 
                     string extension = Path.GetExtension(files[0].FileName);//расширение файла
 
-                    //copy feils в new место которое опредиляется значением (upload)
+                    //copy files в new место которое определяется значением (upload)
                     using (var fileStream = new FileStream(Path.Combine(upload, feilName + extension), FileMode.Create))
                     {
                         files[0].CopyTo(fileStream);
                     }
-                    // обновляется сылка на img
+                    // обновляется ссылка на img
                     proMV.Product.Image = feilName + extension;
-                    this.productRepos.Add(proMV.Product);//добовляем new img 
+                    this.productRepos.Add(proMV.Product); 
                 }
-                else//updating (обновляем)
+                else
                 {
                     var oFromDb = this.productRepos.FirstOrDefault(x => x.Id == proMV.Product.Id,isTracking:false);//существующие названия file  (-- AsNoTracking() отключает отслеживания сущности (нужно для обновления db(иначе будет конфликт с (_db.Products.Update(proMV.Product)))) --)
 
@@ -130,7 +129,7 @@ namespace Mag2.Controllers
 
                         var oldFile = Path.Combine(upload, oFromDb.Image);//ссылка на существующие img
 
-                        if (System.IO.File.Exists(oldFile))//если filt существует
+                        if (System.IO.File.Exists(oldFile))//если file существует
                         {
                             System.IO.File.Delete(oldFile);
                         }
@@ -149,7 +148,7 @@ namespace Mag2.Controllers
 
                     this.productRepos.Update(proMV.Product);
                 }
-                this.productRepos.Save();//передача?(проверка) и сохранения изминений
+                this.productRepos.Save();
                 TempData[WebConst.Success] = "Product type update successfull";
 
                 return RedirectToAction("Index");
@@ -174,7 +173,7 @@ namespace Mag2.Controllers
                 return NotFound();
             }
             //Product product = this.db.Product.Include(x => x.Category).Include(x => x.ApplicationType).FirstOrDefault(x => x.Id == id);//жадная загрузка Include()
-            //product.Categery= _db.Сategery.Find(product.CategeryId); //получаем каткгорию товара
+            //product.Categery= _db.Сategery.Find(product.CategeryId); //получаем категорию товара
             Product product = this.productRepos.FirstOrDefault(x=>x.Id==id,includeProperties: "Category,ApplicationType");
             if (product == null)
             {
@@ -182,7 +181,7 @@ namespace Mag2.Controllers
             }
             return View(product);
         }
-        //Удаление в БД
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
@@ -197,7 +196,7 @@ namespace Mag2.Controllers
             string upload = _webHostEnvironment.WebRootPath + WebConst.ImagePath;//путь к img
             var oldFile = Path.Combine(upload, o.Image);//ссылка на существующие img
 
-            if (System.IO.File.Exists(oldFile))//если filt существует
+            if (System.IO.File.Exists(oldFile))
             {
                 System.IO.File.Delete(oldFile);
             }

@@ -9,7 +9,7 @@ namespace Mag2_Models.ViewModels
     {
         public ProductUserVM()
         {
-            ProductsList = new List<Product>();//
+            ProductsList = new List<Product>();
         }
         public ApplicationUser ApplicationUser { get; set; }
         public IList<Product> ProductsList { get; set; }

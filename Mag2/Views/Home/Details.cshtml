@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <!--если есть товар в cart-->
+                                            
                                             @if (Model.ExistsInCart)
                                             {
                                                 <input asp-for="@Model.Product.QuantityOfGoods" disabled class="form-control" />

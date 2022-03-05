@@ -13,7 +13,7 @@ namespace Mag2_Models
         [Key]
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }//реквизиты клиента
-        [ForeignKey("ApplicationUserId")]//привязка к таблице ApplicationUser
+        [ForeignKey("ApplicationUserId")]
         public ApplicationUser ApplicationUser { get; set; }
         public DateTime InquiryDate { get; set; }//дата регистрации Inquiry(запроса)
         [Required]

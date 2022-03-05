@@ -9,15 +9,15 @@ namespace Mag2_Models
 {
     public class Category
     {
-        [Key]//Первичный ключ и индификатор (значение не передаём в БД)(явное указания)
-        public int Id { get; set; }//(CategeryId)
+        [Key]
+        public int Id { get; set; }
 
-        [Required]//валидация(обизательное заполнение поля) 
+        [Required]
         public string Name { get; set; }
 
-        [DisplayName("Display Order")]// будет отображаться на странице вместо (DisplyOrder)
+        [DisplayName("Display Order")]
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Category display order must not be less than 1!")]
-        public int DisplayOrder { get; set; }//Отобразить заказ//
+        public int DisplayOrder { get; set; }//Отобразить заказ
     }
 }

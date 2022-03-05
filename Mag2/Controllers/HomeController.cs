@@ -70,50 +70,50 @@ namespace Mag2.Controllers
         }
 
 
-        //add товара в крзину___________________
+
         [HttpPost,ActionName("Details")]
         public IActionResult DetailsPost(int id, DetailsVM detailsVM)
         {
-            //list корзины покупок
+           
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart)!=null &&
                 HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart).Count()>0)
             {
-                // если есть товар може ещё добавить
+               
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
             }
             shoppingCartList.Add(new ShoppingCart { ProductId = id, unitsOfGoods=detailsVM.Product.QuantityOfGoods });
             // установка сессии
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
             TempData[WebConst.Success] = "Product added to cart";
-            return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
+            return RedirectToAction(nameof(Index));
         }
 
 
 
-        //delete из корзины_____________________
+
         public IActionResult RemoveFormCart(int id)
         {
-            //list корзины покупок
+
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
 
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart) != null &&
                 HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart).Count() > 0)
             {
-                // если есть товар може ещё добавить
+
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
             }
 
-            var itemToRemove = shoppingCartList.SingleOrDefault(x=>x.ProductId==id);//извличения товара по id
+            var itemToRemove = shoppingCartList.SingleOrDefault(x=>x.ProductId==id);
             if (itemToRemove!=null)
             {
                 shoppingCartList.Remove(itemToRemove);
             }
-            // установка сессии
+
             HttpContext.Session.Set(WebConst.SessionCart, shoppingCartList);
             TempData[WebConst.Success] = "Product has been removed from the cart";
-            return RedirectToAction(nameof(Index));//nameof выбирает только сущ., методы 
+            return RedirectToAction(nameof(Index));
         }
 
 

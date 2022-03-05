@@ -21,7 +21,7 @@ namespace Mag2_DataAcces.RepositoryPattern
 
         public void Update(InquiryDetail obj)
         {
-            this.db.InquiryDetail.Update(obj);//update all
+            this.db.InquiryDetail.Update(obj);
         }
     }
 }

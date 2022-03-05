@@ -1,6 +1,5 @@
 ﻿
-<!--Views->Category-->
-<!--ссылка на модель для ввода новых значений-->
+
 @model Mag2_Models.Category
 
 <form method="post" asp-action="Creat">
@@ -23,8 +22,8 @@
                     </div>
 
                     <div class="col-8">
-                        <input asp-for="Name" class="form-control" /><!--textbox привязка к свойству Name-->
-                        <span asp-validation-for="Name" class="text-danger"></span> <!--Сообщение об ошибке-->
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span> 
                     </div>
 
                 </div>
@@ -36,7 +35,7 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="DisplayOrder" class="form-control" />
-                        <span asp-validation-for="DisplayOrder" class="text-danger"></span><!--validation-for в полне достаточно + валедация на стороне клиента-->
+                        <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -70,7 +69,6 @@
 </form>
 
 
-<!--Валедация на стороне клиента-->
 @section Scripts{
 
     @{

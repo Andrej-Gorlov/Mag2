@@ -20,7 +20,7 @@ using Braintree;
 
 namespace Mag2.Controllers
 {
-    [Authorize]//доступ для авторизованых user(т.е если Authorize, то получаем доступ к корзине)
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IProductRepository productRepos;
@@ -35,7 +35,7 @@ namespace Mag2.Controllers
         private readonly IEmailSender emailSender;
         private readonly IBrainTreeGate brain;
 
-        [BindProperty]//привязка для post запросов (т.е  можем не явно указывать в action metod в параметрах)
+        [BindProperty]
         public ProductUserVM ProductUserVM { get; set; }
         public CartController(IWebHostEnvironment webHostEnvironment, IEmailSender emailSender,
             IProductRepository productRepos, IApplicationUserRepository AppUserRepos,
@@ -70,7 +70,7 @@ namespace Mag2.Controllers
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
 
             }
-            //все товар из корзины 
+
             List<int> prodInCart = shoppingCartList.Select(x => x.ProductId).ToList(); 
 
             IEnumerable<Product> prodListTemp = this.productRepos.GetAll(x => prodInCart.Contains(x.Id));
@@ -161,7 +161,7 @@ namespace Mag2.Controllers
             {
                 if (HttpContext.Session.Get<int>(WebConst.SessionInquiryId)!=0)
                 {
-                    //cart  loaded  по запросу
+
                     InquiryHeader inquiryHeader = this.inqHeaderRepos.FirstOrDefault(x => x.Id == HttpContext.Session.Get<int>(WebConst.SessionInquiryId));
                     applicationUser = new ApplicationUser()
                     {
@@ -183,31 +183,26 @@ namespace Mag2.Controllers
             }
             else
             {
-                var claimsIdentity = (ClaimsIdentity)User.Identity; //id user
+                var claimsIdentity = (ClaimsIdentity)User.Identity; 
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                //var userId = User.FindFirstValue(ClaimTypes.Name);
                 applicationUser = this.AppUserRepos.FirstOrDefault(x => x.Id == claim.Value);
             }
 
-            //доступ у корзине покупок
+
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart) != null &&
                 HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WebConst.SessionCart).Count() > 0)
             {
-                //все товар из корзины 
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
             }
-            //info o товарах из корзины 
             List<int> prodInCart = shoppingCartList.Select(x => x.ProductId).ToList();
             IEnumerable<Product> prodList = this.productRepos.GetAll(x => prodInCart.Contains(x.Id));
 
             ProductUserVM = new ProductUserVM()
             {
-                ApplicationUser = applicationUser,// получение доступа к значению индификатора вошедшего в систему User (т.е id зарегистрированного user)(для получения всех сведений user)
-                //ProductsList =prodList.ToList() //отображаем все товары в корзине!!!
+                ApplicationUser = applicationUser, user)
             };
 
-            //отображаем все товары в корзине!!!
             foreach (var item in shoppingCartList)
             {
                 Product product = this.productRepos.FirstOrDefault(x => x.Id == item.ProductId);
@@ -226,18 +221,13 @@ namespace Mag2.Controllers
         [ActionName("Summary")]
         public async Task<IActionResult> SummaryPost(IFormCollection collection, ProductUserVM productUserVM)//productUserVM передаются все товары из корзины 
         {
-            //find id user
-            var claimsIndetity = (ClaimsIdentity)User.Identity;//даные текущего клиента
-            var claim = claimsIndetity.FindFirst(ClaimTypes.NameIdentifier);// id user
+
+            var claimsIndetity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIndetity.FindFirst(ClaimTypes.NameIdentifier);
 
 
-            if (User.IsInRole(WebConst.AdminRole))// create an order
+            if (User.IsInRole(WebConst.AdminRole))
             {
-                //var orderTotal = 0.0;
-                //foreach (Product item in productUserVM.ProductsList)
-                //{
-                //    orderTotal += item.Price * item.QuantityOfGoods;
-                //}
                 OrderHeader orderHeader = new OrderHeader() 
                 {
                     CreatedByUserId=claim.Value,
@@ -300,12 +290,11 @@ namespace Mag2.Controllers
 
                 return RedirectToAction(nameof(InquriyConfirmation), new { id=orderHeader.Id});
             }
-            else// create in inquiry
+            else
             {
-                //доступ к шаблону Inquiry.html
                 var PathToTemplate = this.webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()// косая черта(Path.DirectorySeparatorChar.ToString())
                     + "templates" + Path.DirectorySeparatorChar.ToString()
-                    + "Inquiry.html";// путь к шаблону
+                    + "Inquiry.html";
 
                 var subject = " New Inquiry ";
                 string HtmlBody = "";
@@ -360,10 +349,9 @@ namespace Mag2.Controllers
 
 
 
-        public IActionResult InquriyConfirmation(int id=0)//Подтверждение запроса
+        public IActionResult InquriyConfirmation(int id=0)
         {
             OrderHeader orderHeader = this.orderHeaderRepos.FirstOrDefault(x => x.Id == id);
-            //clear данных текущий сессии
             HttpContext.Session.Clear();
             return View(orderHeader);
         }

@@ -35,10 +35,10 @@ namespace Mag2
 
             services.AddDbContext<ApplicationDbContext>(o =>
             o.UseSqlServer(
-                Configuration.GetConnectionString("DefConnection")));//подключение к бд
+                Configuration.GetConnectionString("DefConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()//подключенияе IdentityDbContext, устонавливаем пакет .AspNetCore.Identity.UI
-                .AddDefaultTokenProviders()//предостовление токинов по умолчанию (позволяет получить токен при потери пароля)
+            services.AddIdentity<IdentityUser, IdentityRole>()//подключение IdentityDbContext, устанавливаем пакет .AspNetCore.Identity.UI
+                .AddDefaultTokenProviders()//предоставление токсинов по умолчанию (позволяет получить токен при потери пароля)
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();//AddEntityFrameworkStores при migration creat table в db 
 
@@ -49,7 +49,7 @@ namespace Mag2
             services.AddSingleton<IBrainTreeGate, BrainTreeGet>();
 
             services.AddDistributedMemoryCache();
-            services.AddHttpContextAccessor();// добовляем сервисы (для добовления товара в корзину)
+            services.AddHttpContextAccessor();// добавляем сервисы (для добавления товара в корзину)
             services.AddSession(x =>
             {
                 x.IdleTimeout = TimeSpan.FromMinutes(10);// через 10 мин будет обнуление (например товара в корзине)
@@ -59,7 +59,7 @@ namespace Mag2
 
             services.Configure<BrainTreeSettings>(Configuration.GetSection("BrainTree"));
 
-            services.AddScoped<ICategoryRepository, CategoryRepository>();//регистрация ICategoryRepository
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IInquiryHeaderRepository, InquiryHeaderRepository>();
@@ -106,9 +106,7 @@ namespace Mag2
 
             app.UseEndpoints(endpoints =>
             {
-                // маршрутизация для Razor
                 endpoints.MapRazorPages();
-                // маршрутизация для MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

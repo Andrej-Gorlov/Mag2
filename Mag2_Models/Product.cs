@@ -18,8 +18,8 @@ namespace Mag2_Models
         [Required]// также в EntityFrameworkCore преднозначен для передачи данных в бд  
         public string Name { get; set; }
 
-        public string ShortDesc { get; set; }// краткое описание
-        public string Description { get; set; }//описание
+        public string ShortDesc { get; set; }
+        public string Description { get; set; }
         [Range(1, int.MaxValue)]
         public double Price { get; set; }
 
@@ -28,18 +28,18 @@ namespace Mag2_Models
 
 
         [Display(Name = "Category Type")]
-        public int CategoryId { get; set; }// связь сущности между Categery и Product
-        [ForeignKey("CategoryId")]//автоматическая связь между текущим объектом и Categery(создаётся столбец id Categery (т.е. внешний ключ))
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
 
 
         [Display(Name = "Application Type")]
-        public int ApplicationTypeId { get; set; }// связь сущности между Categery и Product
-        [ForeignKey("ApplicationTypeId")]//автоматическая связь между текущим объектом и Categery(создаётся столбец id Categery (т.е. внешний ключ))
+        public int ApplicationTypeId { get; set; }
+        [ForeignKey("ApplicationTypeId")]
         public virtual ApplicationType ApplicationType { get; set; }
 
-        [NotMapped]//no add colum in table
+        [NotMapped]
         [Range(1, 100000,ErrorMessage = "Quantity Of Goods must be greater than 0.")]
         public int QuantityOfGoods { get; set; }
     }

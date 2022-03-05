@@ -3,9 +3,9 @@
 
 <form method="post">
 
-    <input hidden asp-for="InquiryHeader.Id" /><!--для опредиления номера зхапроса-->
+    <input hidden asp-for="InquiryHeader.Id" /><!--для определения номера запроса-->
 
-    <br /> 
+    <br />
 
     <div class="backgroundWhite container">
 
@@ -101,8 +101,8 @@
 
 
                                         <div class="col">
-                                            <input type="submit" value="Delete" class="btn btn-danger form-control" 
-                                                   formaction="/Inquiry/Delete" formmethod="post"/>
+                                            <input type="submit" value="Delete" class="btn btn-danger form-control"
+                                                   formaction="/Inquiry/Delete" formmethod="post" />
                                         </div>
 
 
@@ -128,27 +128,27 @@
                                 @foreach (var item in Model.inquiryDetails)
                                 {
 
-                                    <li class="list-group-item d-flex justify-content-between p-2">
+                                <li class="list-group-item d-flex justify-content-between p-2">
 
-                                        <div class="row container">
+                                    <div class="row container">
 
-                                            <div class="col-8">
+                                        <div class="col-8">
 
-                                                <h6 class="my-0 text-info">@item.Product.Name</h6>
+                                            <h6 class="my-0 text-info">@item.Product.Name</h6>
 
-                                                <small class="text-muted">Price : @item.Product.Price &#8381 </small>
+                                            <small class="text-muted">Price : @item.Product.Price &#8381 </small>
 
-                                                <br />
-
-                                            </div>
-
-                                            <div class="col-4">
-
-                                            </div>
+                                            <br />
 
                                         </div>
 
-                                    </li>
+                                        <div class="col-4">
+
+                                        </div>
+
+                                    </div>
+
+                                </li>
 
                                 }
 
